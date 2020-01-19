@@ -1,11 +1,30 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Square from './Square';
 
 function App() {
+  const field = { width: 10, height :10, type: '2'};
+  const challenges = 
+  [
+    {question: "Where",        answer: "here",    x: 1,    y: 1, direction: 'left'  },
+    {question: "would you",    answer: "yes",    x: 1,    y: 2, direction: 'left'  },
+
+  ];
+  const squares = [];
+
+  for (let i = 0; i < field.width; i++) {
+    squares[i] = [];
+    for (let j = 0; j < field.height; j++) {
+      squares[i][j] = {};
+    }
+  }
+  
+
+  
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -17,8 +36,12 @@ function App() {
           rel="noopener noreferrer"
         >
           Learn React
+          
+
         </a>
-      </header>
+        
+      </header> */}
+      {squares.map((square) => ( <Square />))}
     </div>
   );
 }
