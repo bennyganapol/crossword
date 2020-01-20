@@ -16,7 +16,7 @@ function App() {
   for (let i = 0; i < field.width; i++) {
     squares[i] = [];
     for (let j = 0; j < field.height; j++) {
-      squares[i][j] = {};
+      squares[i][j] = {number: i * 10 + j};
     }
   }
   
@@ -41,7 +41,7 @@ function App() {
         </a>
         
       </header> */}
-      {squares.map((square) => ( <Square />))}
+      {squares.map(line => ( line.map(square => (<Square number={square.number} />))))}
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 
-function Square() {
+function Square(props) {
     return (
-        <div>
-            My square
-        </div>
+        <span style={{border: "1px solid red", width: "45px"}}>
+            {props.number}
+        </span>
     );
 
 } 
