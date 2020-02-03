@@ -2,12 +2,12 @@ import React from 'react';
 
 function Square(props) {
     return (
-        <span style={{border: "1px solid red", width: "45px"}}>
-            {props.number}
-        </span>
+        <div style={{ border: "1px solid red", flex: "1"}}>
+            { props.number }
+        </div >
     );
 
-} 
+}
 
 
 export default Square;
