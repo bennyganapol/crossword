@@ -8,6 +8,9 @@ function Square(props) {
         selectedSquare: {
             backgroundColor: "LightGreen",
         },
+        solvedSquare: {
+            backgroundColor: "Yellow",
+        },
         selectedChallenge: {
             backgroundColor: "LightBlue",
         }
@@ -23,11 +26,14 @@ function Square(props) {
                 { border: "1px solid gray", flex: "1" },
                 (props.challengeSelected) ? styles.selectedChallenge : null,
                 (props.selected) ? styles.selectedSquare : null,
-                (props.isQuestionSquare) ? styles.questionSqaure : null,
+                (props.isSolved === true) ? styles.solvedSquare: null,
+                (props.isQuestionSquare || !props.answerLetter) ? styles.questionSqaure : null,
             )}
         >
             {/* {props.number} */}
-            {props.letter}
+            {props.answerLetter}
+            {props.currentLetter}
+            
         </div >
     );
 
