@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Board from './Board';
 import { getChallenges, getSquares, getChallengeSquares, getSquare, getNextSquare } from '../helpers/initialiser'
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 function App() {
   const board = { width: 10, height: 10, type: '2', defaultTypeDirection: 'right' };
@@ -104,18 +105,48 @@ function App() {
   });
 
   return (
-    <div>
-      <Board
-        selectedSquareId={selectedSquareId}
-        solvedIds={solvedIds}
-        selectedSquares={selectedSquares}
-        squares={squares}
-        letters={letters}
-        width={board.width}
-        height={board.height}
-        squareClicked={(x, y) => squareClicked(x, y)}
-      />
-    </div>
+    <TransformWrapper
+      defaultScale={1}
+      defaultPositionX={200}
+      defaultPositionY={100}
+    >
+      {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+        <React.Fragment>
+          <div className="tools">
+            <button onClick={zoomIn}>+</button>
+            <button onClick={zoomOut}>-</button>
+            <button onClick={resetTransform}>x</button>
+          </div>
+          <TransformComponent>
+
+            <div>
+              <Board
+                selectedSquareId={selectedSquareId}
+                solvedIds={solvedIds}
+                selectedSquares={selectedSquares}
+                squares={squares}
+                letters={letters}
+                width={board.width}
+                height={board.height}
+                squareClicked={(x, y) => squareClicked(x, y)}
+              />
+            </div>
+          </TransformComponent>
+        </React.Fragment>
+      )}
+    </TransformWrapper>
+    // <div>
+    //   <Board
+    //     selectedSquareId={selectedSquareId}
+    //     solvedIds={solvedIds}
+    //     selectedSquares={selectedSquares}
+    //     squares={squares}
+    //     letters={letters}
+    //     width={board.width}
+    //     height={board.height}
+    //     squareClicked={(x, y) => squareClicked(x, y)}
+    //   />
+    // </div>
   );
 }
 
