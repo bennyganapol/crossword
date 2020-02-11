@@ -4,15 +4,22 @@ function Square(props) {
     const styles = {
         questionSqaure: {
             backgroundColor: "Lightgray",
+            fontSize: "10px"
         },
         selectedSquare: {
-            backgroundColor: "LightGreen",
+            backgroundColor: "Yellow",
         },
         solvedSquare: {
-            backgroundColor: "Yellow",
+            backgroundColor: "LightGreen",
         },
         selectedChallenge: {
             backgroundColor: "LightBlue",
+        }
+    }
+
+    const getQuestion = () =>{
+        if (props.isQuestionSquare && props.challenges && props.challenges.length > 0) {
+            return props.challenges[0].question;
         }
     }
 
@@ -30,7 +37,7 @@ function Square(props) {
                 (props.isQuestionSquare || !props.answerLetter) ? styles.questionSqaure : null,
             )}
         >
-            {/* {props.number} */}
+            {getQuestion()}
             {props.answerLetter}
             {props.currentLetter}
             
