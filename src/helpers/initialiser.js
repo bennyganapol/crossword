@@ -7,6 +7,7 @@ export const getChallenges = () => {
             { question: "would you", answer: "yes", x: 2, y: 2, questionX: 1, questionY: 2, direction: 'right' },
             { question: "really", answer: "maybe", x: 3, y: 5, questionX: 3, questionY: 4, direction: 'down' },
             { question: "who", answer: "man", x: 2, y: 6, questionX: 1, questionY: 6, direction: 'right' },
+            { question: "something to smoke", answer: "weed", x: 3, y: 0, questionX: 4, questionY: 0, direction: 'down' },
 
         ];
     return challenges;
@@ -28,11 +29,12 @@ export const getSquares = (challenges, boardWidth, boardHeight) => {
 
     challenges.forEach(challenge => {
 
-        if (challenge.questionX && challenge.questionY) {
+        if (challenge.questionX != null && challenge.questionY != null) {
             let questionSquare = getSquare(squares, challenge.questionX, challenge.questionY, boardWidth, boardHeight);
             if (questionSquare) {
                 questionSquare.isQuestionSquare = true;
                 questionSquare.challenges.push(challenge);
+                questionSquare.arrowType = getChallengeArrowType(challenge.questionX, challenge.questionY, challenge.x, challenge.y, challenge.direction);
             }
         }
 
@@ -48,6 +50,46 @@ export const getSquares = (challenges, boardWidth, boardHeight) => {
     });
 
     return squares;
+}
+
+const getChallengeArrowType = (questionX, questionY, x, y, direction) => {
+    let arrowType = '';
+    
+    if(direction === 'down'){
+        if (questionX == x) {
+            arrowType = 'down';
+        }
+        else if (questionX < x) {
+            arrowType = 'rightDown';
+        }
+        else{
+            arrowType = 'leftDown';
+        }
+    }
+    else if(direction === 'left'){
+        if (questionY == y) {
+            arrowType = 'left';
+        }
+        else if (questionY > y) {
+            arrowType = 'downLeft';
+        }
+        else{
+            arrowType = 'upLeft';
+        }
+    }
+    else if(direction === 'right'){
+        if (questionY == y) {
+            arrowType = 'right';
+        }
+        else if (questionY > y) {
+            arrowType = 'downRight';
+        }
+        else{
+            arrowType = 'upRight';
+        }
+    }
+
+    return arrowType;
 }
 
 export const getChallengeSquares = (squares, challenge) => {
@@ -71,7 +113,7 @@ export const getChallengeSquares = (squares, challenge) => {
             default:
                 break;
         }
-        returnSquares.push(getSquare(squares, x ,y));
+        returnSquares.push(getSquare(squares, x, y));
     }
     return returnSquares;
 }
@@ -97,9 +139,9 @@ export const getNextSquare = (squares, squareId, direction, ) => {
             break;
     }
 
-    const nextSquare = getSquare(squares, x ,y);
-    
-    return (nextSquare && nextSquare.answerLetter)? nextSquare.id : null; 
+    const nextSquare = getSquare(squares, x, y);
+
+    return (nextSquare && nextSquare.answerLetter) ? nextSquare.id : null;
 }
 
 export const getSquare = (squares, x, y, boardWidth, boardHeight) => {
