@@ -56,7 +56,7 @@ const getChallengeArrowType = (questionX, questionY, x, y, direction) => {
     let arrowType = '';
     
     if(direction === 'down'){
-        if (questionX == x) {
+        if (questionX === x) {
             arrowType = 'down';
         }
         else if (questionX < x) {
@@ -67,7 +67,7 @@ const getChallengeArrowType = (questionX, questionY, x, y, direction) => {
         }
     }
     else if(direction === 'left'){
-        if (questionY == y) {
+        if (questionY === y) {
             arrowType = 'left';
         }
         else if (questionY > y) {
@@ -78,7 +78,7 @@ const getChallengeArrowType = (questionX, questionY, x, y, direction) => {
         }
     }
     else if(direction === 'right'){
-        if (questionY == y) {
+        if (questionY === y) {
             arrowType = 'right';
         }
         else if (questionY > y) {
@@ -118,30 +118,33 @@ export const getChallengeSquares = (squares, challenge) => {
     return returnSquares;
 }
 
-export const getNextSquare = (squares, squareId, direction, ) => {
+export const getNextSquare = (squares, squareId, direction, nextSize = 1) => {
     const currentSquare = squares[squareId];
+    if (!currentSquare) {
+        return null;
+    }
     let x = currentSquare.x;
     let y = currentSquare.y;
     switch (direction) {
         case 'left':
-            x -= 1
+            x -= nextSize;
             break;
         case 'right':
-            x += 1;
+            x += nextSize;
             break;
         case 'down':
-            y += 1;
+            y += nextSize;
             break;
         case 'up':
-            y -= 1;
+            y -= nextSize;
             break;
-        default:
+        default:    
             break;
     }
 
     const nextSquare = getSquare(squares, x, y);
 
-    return (nextSquare && nextSquare.answerLetter) ? nextSquare.id : null;
+    return (nextSquare && nextSquare.answerLetter) ? nextSquare.id : squareId;
 }
 
 export const getSquare = (squares, x, y, boardWidth, boardHeight) => {

@@ -33,9 +33,9 @@ function Square(props) {
             style={Object.assign(
                 { border: "1px solid gray", display: "flex", alignItems: "center", justifyContent: "center", flex: "1", position: "relative" },
                 (props.challengeSelected) ? styles.selectedChallenge : null,
-                (props.selected) ? styles.selectedSquare : null,
                 (props.isSolved === true) ? styles.solvedSquare : null,
                 (props.isQuestionSquare || !props.answerLetter) ? styles.questionSqaure : null,
+                (props.selected) ? styles.selectedSquare : null,
             )}
         >
             {props.arrowType === 'right' &&

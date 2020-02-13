@@ -72,6 +72,73 @@ function App() {
     }
   }
 
+  const keyDownHandler = (e) => {
+    const { key, keyCode } = e;
+    //alert(keyCode + ' ' + key);
+    //alert(key);
+    if (key === "Backspace") {
+      let deleteSquareIds = [selectedSquareId];
+
+      const currentSquare = squares[selectedSquareId];
+
+      if (!currentSquare) {
+        return;
+      }
+      
+      let currentChallenge = null;
+      if (currentSquare.challenges && currentSquare.challenges.length > 0) {
+        if (currentSquare.challenges.length === 1 || currentSquare.challenges[0].direction === selectDirection) {
+          currentChallenge = currentSquare.challenges[0];
+        }
+        else{
+          currentChallenge = currentSquare.challenges[1];
+        }
+      }
+
+      if (currentSquare.x === currentChallenge.x && currentSquare.y === currentChallenge.y) {
+        deleteSquareIds.push(selectedSquareId);
+      }
+      else if (letters[selectedSquareId] != null && !solvedIds.includes(selectedSquareId)) {
+        deleteSquareIds.push(selectedSquareId);
+      }
+      else {
+        const previousSquare = getNextSquare(squares, selectedSquareId, selectDirection, -1);
+        deleteSquareIds.push(previousSquare);
+        setSelectedSquareId(previousSquare);
+      }
+
+      for (let i = 0; i < deleteSquareIds.length; i++) {
+        const deleteID = deleteSquareIds[i];
+        if (letters[deleteID] != null && !solvedIds.includes(deleteID)) {
+          const newLetters = letters.slice();
+          newLetters[deleteID] = null;
+          setLetters(newLetters);
+        }
+      }
+    }
+    else if (key === "ArrowRight") {
+      const selectedSquare = squares[selectedSquareId];
+      const newSquare = getSquare(squares, Math.min(selectedSquare.x + 1, board.width - 1), selectedSquare.y);
+      // setSelectedSquareId();
+      squareClicked(newSquare.id);
+    }
+    else if (key === "ArrowLeft") {
+      const selectedSquare = squares[selectedSquareId];
+      const newSquare = getSquare(squares, Math.max(selectedSquare.x - 1, 0), selectedSquare.y);
+      squareClicked(newSquare.id);
+    }
+    else if (key === "ArrowUp") {
+      const selectedSquare = squares[selectedSquareId];
+      const newSquare = getSquare(squares, selectedSquare.x, Math.max(selectedSquare.y - 1, 0));
+      squareClicked(newSquare.id);
+    }
+    else if (key === "ArrowDown") {
+      const selectedSquare = squares[selectedSquareId];
+      const newSquare = getSquare(squares, selectedSquare.x, Math.min(selectedSquare.y + 1, board.height - 1));
+      squareClicked(newSquare.id);
+    }
+  }
+
   const checkAnswer = (selectedSquare, newLetters) => {
     for (let i = 0; i < selectedSquare.challenges.length; i++) {
       const challengeSquares = getChallengeSquares(squares, selectedSquare.challenges[i]);
@@ -99,8 +166,10 @@ function App() {
 
   useEffect(() => {
     document.addEventListener("keypress", keyPressedHandler, false);
+    document.addEventListener("keydown", keyDownHandler, false);
     return () => {
       document.removeEventListener('keypress', keyPressedHandler);
+      document.removeEventListener('keydown', keyDownHandler);
     };
   });
 
@@ -135,18 +204,6 @@ function App() {
         </React.Fragment>
       )}
     </TransformWrapper>
-    // <div>
-    //   <Board
-    //     selectedSquareId={selectedSquareId}
-    //     solvedIds={solvedIds}
-    //     selectedSquares={selectedSquares}
-    //     squares={squares}
-    //     letters={letters}
-    //     width={board.width}
-    //     height={board.height}
-    //     squareClicked={(x, y) => squareClicked(x, y)}
-    //   />
-    // </div>
   );
 }
 
