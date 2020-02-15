@@ -1,7 +1,7 @@
 import React from 'react';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import './App.css';
 import Square from './Square';
-import { getSquare } from '../helpers/initialiser'
 
 function Board(props) {
     const squareClicked = (id) => {
@@ -20,17 +20,17 @@ function Board(props) {
         return (props.selectedSquares && props.selectedSquares.some(s => s.id === id));
     }
 
-    const getLetter = (id) => {
-        let letter = null;
-        if (props.letters && props.letters[id]) {
-            letter = props.letters[id];
-        }
-        return letter;
-    }
+    // const getLetter = (id) => {
+    //     let letter = null;
+    //     if (props.letters && props.letters[id]) {
+    //         letter = props.letters[id];
+    //     }
+    //     return letter;
+    // }
 
     const renderBoard = () => {
         const board = [];
-        
+
         for (let y = 0; y < props.height; y++) {
             const row = [];
             for (let x = 0; x < props.width; x++) {
@@ -56,11 +56,28 @@ function Board(props) {
 
 
     return (
-        <div className="App" style={{ display: "flex", flexDirection: "column", width: "600px", height: "600px" }}>
-            {renderBoard()}
-        </div>
+        <TransformWrapper
+            defaultScale={1}
+            defaultPositionX={100}
+            defaultPositionY={200}
+            pan={{ paddingSize: 0 }}
+        >
+            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                <React.Fragment>
+                    <div className="tools">
+                        <button onClick={zoomIn}>+</button>
+                        <button onClick={zoomOut}>-</button>
+                        <button onClick={resetTransform}>x</button>
+                    </div>
+                    <TransformComponent>
+                        <div className="App" style={{ display: "flex", flexDirection: "column", width: props.width * props.squareSize + "px", height: props.height * props.squareSize + "px" }}>
+                            {renderBoard()}
+                        </div>
+                    </TransformComponent>
+                </React.Fragment>
+            )}
+        </TransformWrapper>
     );
-
 }
 
 export default Board;

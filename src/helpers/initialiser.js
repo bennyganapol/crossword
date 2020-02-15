@@ -1,15 +1,19 @@
-import Square from "../components/Square";
-
 export const getChallenges = () => {
     const challenges =
         [
+            
+            { question: "שחקן גרמני", answer: "טוני", x: 8, y: 4, questionX: 9, questionY: 4, direction: 'left' },
             { question: "Where", answer: "here", x: 2, y: 1, questionX: 1, questionY: 1, direction: 'right' },
             { question: "would you", answer: "yes", x: 2, y: 2, questionX: 1, questionY: 2, direction: 'right' },
             { question: "really", answer: "maybe", x: 3, y: 5, questionX: 3, questionY: 4, direction: 'down' },
             { question: "who", answer: "man", x: 2, y: 6, questionX: 1, questionY: 6, direction: 'right' },
             { question: "something to smoke", answer: "weed", x: 3, y: 0, questionX: 4, questionY: 0, direction: 'down' },
+            
 
         ];
+    for (let i = 0; i < challenges.length; i++) {
+        challenges[i].id = i;
+    }
     return challenges;
 }
 
@@ -54,37 +58,37 @@ export const getSquares = (challenges, boardWidth, boardHeight) => {
 
 const getChallengeArrowType = (questionX, questionY, x, y, direction) => {
     let arrowType = '';
-    
-    if(direction === 'down'){
+
+    if (direction === 'down') {
         if (questionX === x) {
             arrowType = 'down';
         }
         else if (questionX < x) {
             arrowType = 'rightDown';
         }
-        else{
+        else {
             arrowType = 'leftDown';
         }
     }
-    else if(direction === 'left'){
+    else if (direction === 'left') {
         if (questionY === y) {
             arrowType = 'left';
         }
         else if (questionY > y) {
             arrowType = 'downLeft';
         }
-        else{
+        else {
             arrowType = 'upLeft';
         }
     }
-    else if(direction === 'right'){
+    else if (direction === 'right') {
         if (questionY === y) {
             arrowType = 'right';
         }
         else if (questionY > y) {
             arrowType = 'downRight';
         }
-        else{
+        else {
             arrowType = 'upRight';
         }
     }
@@ -138,7 +142,7 @@ export const getNextSquare = (squares, squareId, direction, nextSize = 1) => {
         case 'up':
             y -= nextSize;
             break;
-        default:    
+        default:
             break;
     }
 

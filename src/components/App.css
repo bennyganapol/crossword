@@ -27,6 +27,11 @@
 .App-link {
   color: #61dafb;
 }
+div .react-transform-component {
+  max-width: 600px;
+  max-height: 600px;
+  height: 600px;
+}
 
 @keyframes App-logo-spin {
   from {

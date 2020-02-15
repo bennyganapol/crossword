@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Board from './Board';
+import ChallengeBar from './ChallengeBar';
 import { getChallenges, getSquares, getChallengeSquares, getSquare, getNextSquare } from '../helpers/initialiser'
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 function App() {
-  const board = { width: 10, height: 10, type: '2', defaultTypeDirection: 'right' };
+  const board = { width: 10, height: 10, type: '2', defaultTypeDirection: 'left' };
 
-  const [challenges, setChallenges] = useState(getChallenges());
-  const [squares, setSqaures] = useState(getSquares(challenges, board.width, board.height));
+  const [challenges] = useState(getChallenges());
+  const [squares] = useState(getSquares(challenges, board.width, board.height));
   const [selectedSquareId, setSelectedSquareId] = useState();
   const [selectedSquares, setSelectedSquares] = useState([]);
+  const [selectedChallengeId, setSelectedChallengeId] = useState(0);
   const [solvedIds, setSolvedIds] = useState([]);
+  const [solvedChallengesIds, setSolvedChallengesIds] = useState([]);
   const [selectDirection, setSelectDirection] = useState();
   const [letters, setLetters] = useState([]);
 
@@ -24,30 +26,32 @@ function App() {
     setSelectedSquareId(newSelectedId);
 
     if (newSelectedSquare.challenges && newSelectedSquare.challenges.length > 0) {
-      let newChallengeId = 0;
+      let newChallengeIndex = 0;
       if (newSelectedSquare.challenges.length === 1) {
-        newChallengeId = 0;
+        newChallengeIndex = 0;
       }
       else {
         if (isSelectedAgain) {
           if (selectDirection === newSelectedSquare.challenges[0].direction) {
-            newChallengeId = 1;
+            newChallengeIndex = 1;
           }
           else {
-            newChallengeId = 0;
+            newChallengeIndex = 0;
           }
         }
         else {
           if (newSelectedSquare.challenges[0].direction === selectDirection) {
-            newChallengeId = 0;
+            newChallengeIndex = 0;
           }
           else {
-            newChallengeId = 1;
+            newChallengeIndex = 1;
           }
         }
       }
-      setSelectedSquares(getChallengeSquares(squares, newSelectedSquare.challenges[newChallengeId]).map(square => ({ id: square.id })));
-      setSelectDirection(newSelectedSquare.challenges[newChallengeId].direction);
+      const newChallenge = newSelectedSquare.challenges[newChallengeIndex];
+      setSelectedSquares(getChallengeSquares(squares, newChallenge).map(square => ({ id: square.id })));
+      setSelectDirection(newChallenge.direction);
+      setSelectedChallengeId(newChallenge.id);
     }
     else {
       setSelectedSquares();
@@ -73,9 +77,7 @@ function App() {
   }
 
   const keyDownHandler = (e) => {
-    const { key, keyCode } = e;
-    //alert(keyCode + ' ' + key);
-    //alert(key);
+    const { key } = e;
     if (key === "Backspace") {
       let deleteSquareIds = [selectedSquareId];
 
@@ -84,13 +86,13 @@ function App() {
       if (!currentSquare) {
         return;
       }
-      
+
       let currentChallenge = null;
       if (currentSquare.challenges && currentSquare.challenges.length > 0) {
         if (currentSquare.challenges.length === 1 || currentSquare.challenges[0].direction === selectDirection) {
           currentChallenge = currentSquare.challenges[0];
         }
-        else{
+        else {
           currentChallenge = currentSquare.challenges[1];
         }
       }
@@ -153,13 +155,20 @@ function App() {
 
       if (challengeCompleted) {
         const newSolvedIds = solvedIds.slice();
+        const newSolvedChallengesIds = solvedChallengesIds.slice();
         for (let s = 0; s < challengeSquares.length; s++) {
           const square = challengeSquares[s];
           if (!newSolvedIds.includes(square.id)) {
             newSolvedIds.push(square.id)
           }
         }
+        if (!newSolvedChallengesIds.includes(selectedSquare.challenges[i].id)) {
+          newSolvedChallengesIds.push(selectedSquare.challenges[i].id)
+        }
+
         setSolvedIds(newSolvedIds);
+        setSolvedChallengesIds(newSolvedChallengesIds);
+
       }
     }
   }
@@ -174,36 +183,22 @@ function App() {
   });
 
   return (
-    <TransformWrapper
-      defaultScale={1}
-      defaultPositionX={200}
-      defaultPositionY={100}
-    >
-      {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-        <React.Fragment>
-          <div className="tools">
-            <button onClick={zoomIn}>+</button>
-            <button onClick={zoomOut}>-</button>
-            <button onClick={resetTransform}>x</button>
-          </div>
-          <TransformComponent>
-
-            <div>
-              <Board
-                selectedSquareId={selectedSquareId}
-                solvedIds={solvedIds}
-                selectedSquares={selectedSquares}
-                squares={squares}
-                letters={letters}
-                width={board.width}
-                height={board.height}
-                squareClicked={(x, y) => squareClicked(x, y)}
-              />
-            </div>
-          </TransformComponent>
-        </React.Fragment>
-      )}
-    </TransformWrapper>
+    <div>
+      <span>Challenges: {solvedChallengesIds.length}\{challenges.length}</span>
+      {(solvedChallengesIds.length === challenges.length) && <span> Game won !</span>}
+      <ChallengeBar selectedChallenge={challenges[selectedChallengeId]} challengeSquares={getChallengeSquares(squares, challenges[selectedChallengeId])} />
+      <Board
+        selectedSquareId={selectedSquareId}
+        solvedIds={solvedIds}
+        selectedSquares={selectedSquares}
+        squares={squares}
+        letters={letters}
+        width={board.width}
+        height={board.height}
+        squareSize={60}
+        squareClicked={(x, y) => squareClicked(x, y)}
+      />
+    </div>
   );
 }
 

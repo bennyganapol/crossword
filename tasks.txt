@@ -1,0 +1,26 @@
+
+Arrowword:
+(V) Solved out of total questions counter
+(V) Finish game message
+(V) Fix Dynamic Board size
+(V) Hebrew
+- Show current challenge
+- Image challenge
+- 2 questions in a square
+
+
+
+General:
+- Put challenges and board in a json
+- At least 2 AarrowWords
+- Main screen choose from 2 puzzles
+
+Crossword:
+- Add puzzleType
+- Challanges
+
+
+
+
+
+
