@@ -182,6 +182,8 @@ function App() {
     };
   });
 
+  
+
   return (
     <div>
       <span>Challenges: {solvedChallengesIds.length}\{challenges.length}</span>
