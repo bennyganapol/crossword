@@ -38,6 +38,10 @@ function Square(props) {
                 (props.selected) ? styles.selectedSquare : null,
             )}
         >
+            {props.image && 
+                <img style={{position: "absolute", width: "178px", height: "178px",right:"0px",  top: "0px", zIndex: "20"}} src={props.image}></img>
+            }   
+            
             {props.arrowType === 'right' &&
                 <div style={{ position: "absolute", pointerEvents: "none", fontSize: "20px", left: "60%", top: "40%", backgroundColor: "", height: "100%", width: "100%" }} >
                     <FiArrowRight style={{ position: "relative", zIndex: "10" }} />

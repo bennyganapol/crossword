@@ -1,15 +1,16 @@
+import {Img1} from '../Images/img1'
+
 export const getChallenges = () => {
     const challenges =
         [
             
-            { question: "שחקן גרמני", answer: "טוני", x: 8, y: 4, questionX: 9, questionY: 4, direction: 'left' },
+            { question: "שחקן גרמני", answer: "טוני", x: 7, y: 4, questionX: 8, questionY: 4, direction: 'left' },
             { question: "Where", answer: "here", x: 2, y: 1, questionX: 1, questionY: 1, direction: 'right' },
             { question: "would you", answer: "yes", x: 2, y: 2, questionX: 1, questionY: 2, direction: 'right' },
             { question: "really", answer: "maybe", x: 3, y: 5, questionX: 3, questionY: 4, direction: 'down' },
             { question: "who", answer: "man", x: 2, y: 6, questionX: 1, questionY: 6, direction: 'right' },
             { question: "something to smoke", answer: "weed", x: 3, y: 0, questionX: 4, questionY: 0, direction: 'down' },
-            
-
+            { questionType:"image", answer: "ירדןהראל", x: 9, y: 0, questionX: 8, questionY: 0, direction: 'down', imageId: '0'},
         ];
     for (let i = 0; i < challenges.length; i++) {
         challenges[i].id = i;
@@ -37,6 +38,10 @@ export const getSquares = (challenges, boardWidth, boardHeight) => {
             let questionSquare = getSquare(squares, challenge.questionX, challenge.questionY, boardWidth, boardHeight);
             if (questionSquare) {
                 questionSquare.isQuestionSquare = true;
+                if (challenge.imageId) {
+                    questionSquare.image = Img1;
+                }
+
                 questionSquare.challenges.push(challenge);
                 questionSquare.arrowType = getChallengeArrowType(challenge.questionX, challenge.questionY, challenge.x, challenge.y, challenge.direction);
             }

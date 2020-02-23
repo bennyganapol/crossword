@@ -5,7 +5,7 @@ import ChallengeBar from './ChallengeBar';
 import { getChallenges, getSquares, getChallengeSquares, getSquare, getNextSquare } from '../helpers/initialiser'
 
 function App() {
-  const board = { width: 10, height: 10, type: '2', defaultTypeDirection: 'left' };
+  const board = { width: 10, height: 10, type: '2', horizontalDirection: 'rtl' };
 
   const [challenges] = useState(getChallenges());
   const [squares] = useState(getSquares(challenges, board.width, board.height));
@@ -182,13 +182,21 @@ function App() {
     };
   });
 
-  
+
 
   return (
     <div>
       <span>Challenges: {solvedChallengesIds.length}\{challenges.length}</span>
       {(solvedChallengesIds.length === challenges.length) && <span> Game won !</span>}
-      <ChallengeBar selectedChallenge={challenges[selectedChallengeId]} challengeSquares={getChallengeSquares(squares, challenges[selectedChallengeId])} />
+      <ChallengeBar
+        selectedChallenge={challenges[selectedChallengeId]}
+        challengeSquares={getChallengeSquares(squares, challenges[selectedChallengeId])}
+        selectedSquareId={selectedSquareId}
+        solvedIds={solvedIds}
+        letters={letters}
+        horizontalDirection={board.horizontalDirection}
+        squareClicked={(id) => squareClicked(id)}
+      />
       <Board
         selectedSquareId={selectedSquareId}
         solvedIds={solvedIds}

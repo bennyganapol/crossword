@@ -4,7 +4,7 @@ Arrowword:
 (V) Finish game message
 (V) Fix Dynamic Board size
 (V) Hebrew
-- Show current challenge
+(V) Show current challenge
 - Image challenge
 - 2 questions in a square
 
