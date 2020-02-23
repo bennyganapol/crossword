@@ -3,6 +3,36 @@ import { Img1 } from '../Images/img1'
 export const getChallenges = () => {
     const challenges =
         [
+            { question: "נוזל לציפורניים", answer: "לק", x: 0, y: 0, questionX: 1, questionY: 0, direction: 'down' },
+            { question: "בירת מלטה", answer: "ולטה", x: 1, y: 1, questionX: 1, questionY: 0, direction: 'down' },
+            { question: "אחד המקשים במקלדת", answer: "טאב", x: 2, y: 1, questionX: 2, questionY: 0, direction: 'down' },
+            { question: "אות יוונית", answer: "קסי", x: 3, y: 0, questionX: 4, questionY: 0, direction: 'down' },
+            { question: "גם כן", answer: "נמי", x: 5, y: 1, questionX: 5, questionY: 0, direction: 'down' },
+            { question: "זכרונו לברכה", answer: "זל", x: 6, y: 1, questionX: 6, questionY: 0, direction: 'down' },
+            { question: "עיר ההימורים בארהב", answer: "לאס וגאס", x: 7, y: 1, questionX: 7, questionY: 0, direction: 'down' },
+            { question: "מין עוף טרופי", answer: "קורול", x: 8, y: 0, questionX: 9, questionY: 0, direction: 'down' },
+            { question: "קידומת הולנדית", answer: "ון", x: 4, y: 2, questionX: 4, questionY: 1, direction: 'down' },
+            { question: "מחשבה", answer: "הרהור", x: 9, y: 2, questionX: 9, questionY: 1, direction: 'down' },
+            { question: "תמים", answer: "נאיבי", x: 0, y: 3, questionX: 0, questionY: 2, direction: 'down' },
+            
+            
+
+            { question: "מסולם התווים", answer: "סי", x: 1, y: 7, questionX: 2, questionY: 7, direction: 'left' },
+            { question: "מחסום לפי החיה", answer: "רסנ", x: 8, y: 7, questionX: 9, questionY: 7, direction: 'left' },
+            { question: "מפקד פלוגה רת", answer: "מפ", x: 11, y: 7, questionX: 12, questionY: 7, direction: 'left' },
+
+            { question: "בירת ערב הסעודית", answer: "ריאד", x: 9, y: 6, questionX: 10, questionY: 6, direction: 'left' },
+            { question: "זז", answer: "מש", x: 12, y: 6, questionX: 12, questionY: 5, direction: 'left' },
+            { question: "מעמד, מדרגה", answer: "שלב", x: 2, y: 6, questionX: 2, questionY: 5, direction: 'left' },
+            { question: "מתגורר", answer: "גר", x: 7, y: 5, questionX: 8, questionY: 5, direction: 'left' },
+            { question: "התעכבו, נשארו", answer: "שהו", x: 11, y: 5, questionX: 12, questionY: 5, direction: 'left' },
+            { question: "אות בעברית", answer: "הא", x: 1, y: 4, questionX: 2, questionY: 4, direction: 'left' },
+            { question: "מרמטכלי צהל", answer: "משה לוי", x: 11, y: 4, questionX: 12, questionY: 4, direction: 'left' },
+            { question: "כרס", answer: "בטן", x: 2, y: 3, questionX: 3, questionY: 3, direction: 'left' },
+            { question: "מטבע יפני", answer: "ין", x: 5, y: 3, questionX: 6, questionY: 3, direction: 'left' },
+            { question: "אי געשי באנטרטיקה", answer: "רוס", x: 9, y: 3, questionX: 10, questionY: 3, direction: 'left' },
+            { question: "עיר בהולנד", answer: "ולזן", x: 8, y: 1, questionX: 9, questionY: 1, direction: 'left' },
+            { question: "מלאי", answer: "סטוק", x: 3, y: 1, questionX: 4, questionY: 1, direction: 'left' },
             { question: "עכשיו", answer: "כעת", x: 2, y: 10, questionX: 3, questionY: 10, direction: 'left' },
             { question: "תואר לשחמטאי", answer: "רבאמן", x: 8, y: 10, questionX: 9, questionY: 10, direction: 'left' },
             { question: "מחודשי השנה", answer: "שבט", x: 12, y: 10, questionX: 12, questionY: 9, direction: 'left' },
@@ -20,7 +50,8 @@ export const getChallenges = () => {
             // { question: "really", answer: "maybe", x: 3, y: 5, questionX: 3, questionY: 4, direction: 'down' },
             // { question: "who", answer: "man", x: 2, y: 6, questionX: 1, questionY: 6, direction: 'right' },
             // { question: "something to smoke", answer: "weed", x: 3, y: 0, questionX: 4, questionY: 0, direction: 'down' },
-            // { questionType:"image", answer: "ירדןהראל", x: 9, y: 0, questionX: 8, questionY: 0, direction: 'down', imageId: '0'},
+             { questionType:"image", answer: "ירדןהראל", x: 6, y: 4, questionX: 5, questionY: 4, direction: 'down', imageId: '0'},
+             { questionType:"image", answer: "הראלמויאל", x: 9, y: 2, questionX: 12, questionY: 0, direction: 'left', imageId: '0'},
         ];
     for (let i = 0; i < challenges.length; i++) {
         challenges[i].id = i;

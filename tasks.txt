@@ -7,8 +7,9 @@ Arrowword:
 (V) Show current challenge
 (VX) 2 questions in a square (set order)
 - callenge square clicked - pick first square + if chllage already selected do nothing
-- Image challenge
-
+- Image challenge - fix arrows and image location
+- Auto switch heberew's end letters
+- split challenge square - fix order calculation
 
 
 
