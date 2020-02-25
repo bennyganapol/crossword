@@ -5,7 +5,7 @@ import ChallengeBar from './ChallengeBar';
 import { getChallenges, getSquares, getChallengeSquares, getSquare, getNextSquare } from '../helpers/initialiser'
 
 function App() {
-  const board = { width: 10, height: 10, type: '2', horizontalDirection: 'rtl' };
+  const board = { width: 13, height: 13, type: '2', horizontalDirection: 'rtl' };
 
   const [challenges] = useState(getChallenges());
   const [squares] = useState(getSquares(challenges, board.width, board.height));

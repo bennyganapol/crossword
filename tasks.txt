@@ -5,8 +5,11 @@ Arrowword:
 (V) Fix Dynamic Board size
 (V) Hebrew
 (V) Show current challenge
+(VX) 2 questions in a square (set order)
+- callenge square clicked - pick first square + if chllage already selected do nothing
 - Image challenge
-- 2 questions in a square
+
+
 
 
 

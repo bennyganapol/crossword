@@ -15,13 +15,65 @@ function Square(props) {
         },
         selectedChallenge: {
             backgroundColor: "LightBlue",
+        },
+        splittedSquare: {
+            flexDirection: "column",
         }
     }
 
     const getQuestion = () => {
+        let questionContent = null;
         if (props.isQuestionSquare && props.challenges && props.challenges.length > 0) {
-            return props.challenges[0].question;
+            if (props.challenges.length === 1) {
+                questionContent =
+                    <React.Fragment>
+                        {/* <FiArrowRight style={{ position: "absolute", zIndex: "10", fontSize: "20px", marginLeft: "50%", left: "45%" }} /> */}
+                        {getArrow(props.challenges[0].arrowType)}
+                        {props.challenges[0].question}
+                    </React.Fragment>
+                //questionContent = props.challenges[0].question;
+            }
+            else
+                questionContent = <React.Fragment>
+                    <div style={{ display: "flex", flex: "1", alignItems: "center", justifyContent: "center", width: "100%", borderBottom: "1px solid gray" }}>
+                        {getArrow(props.challenges[0].arrowType)}
+                        {props.challenges[0].question}
+                    </div>
+                    <div style={{ display: "flex", flex: "1", alignItems: "center", justifyContent: "center" }}>
+                        {getArrow(props.challenges[1].arrowType)}
+                        {props.challenges[1].question}
+                    </div>
+                </React.Fragment>;
         }
+        return questionContent;
+    }
+
+    const getArrow = (arrowType) => {
+        let arrow = null;
+        switch (arrowType) {
+            case 'right':
+                arrow = <FiArrowRight style={{ position: "absolute", zIndex: "10", fontSize: "20px", marginLeft: "50%", left: "45%" }} />
+                break;
+            case 'left':
+                arrow = <FiArrowLeft style={{ position: "absolute", zIndex: "10", fontSize: "20px", marginRight: "50%", right: "45%" }} />
+                break;
+            case 'down':
+                arrow = <FiArrowDown style={{ position: "absolute", zIndex: "10", fontSize: "20px", marginTop: "50%", top: "45%" }} />
+                break;
+            case 'rightDown':
+                arrow = <FiCornerRightDown style={{ position: "absolute", zIndex: "10", fontSize: "20px", marginLeft: "50%", left: "45%" }} />
+                break;
+            case 'leftDown':
+                arrow = <FiCornerLeftDown style={{ position: "absolute", zIndex: "10", fontSize: "20px", marginRight: "50%", right: "45%" }} />
+                break;
+            case 'downLeft':
+                arrow = <FiCornerDownLeft style={{ position: "absolute", zIndex: "10", fontSize: "20px",  marginTop: "50%", top: "45%" }} />
+                break;
+
+            default:
+                break;
+        }
+        return arrow;
     }
 
 
@@ -36,41 +88,17 @@ function Square(props) {
                 (props.isSolved === true) ? styles.solvedSquare : null,
                 (props.isQuestionSquare || !props.answerLetter) ? styles.questionSqaure : null,
                 (props.selected) ? styles.selectedSquare : null,
+                (props.challenges && props.challenges.length >= 2 && props.isQuestionSquare) ? styles.splittedSquare : null
             )}
         >
-            {props.image && 
-                <img style={{position: "absolute", width: "178px", height: "178px",right:"0px",  top: "0px", zIndex: "20"}} src={props.image}></img>
-            }   
-            
-            {props.arrowType === 'right' &&
-                <div style={{ position: "absolute", pointerEvents: "none", fontSize: "20px", left: "60%", top: "40%", backgroundColor: "", height: "100%", width: "100%" }} >
-                    <FiArrowRight style={{ position: "relative", zIndex: "10" }} />
-                </div>
-            }
-            {props.arrowType === 'left' &&
-                <div style={{ position: "absolute", pointerEvents: "none", fontSize: "20px", left: "50%", top: "50%", backgroundColor: "", height: "100%", width: "100%" }} >
-                    <FiArrowLeft style={{ position: "relative", zIndex: "10" }} />
-                </div>
-            }
-            {props.arrowType === 'down' &&
-                <div style={{ position: "absolute", pointerEvents: "none", fontSize: "20px", top: "90%", backgroundColor: "", height: "100%", width: "100%" }} >
-                    <FiArrowDown style={{ position: "relative", zIndex: "10" }} />
-                </div>
-            }
-            {props.arrowType === 'rightDown' &&
-                <div style={{ position: "absolute", pointerEvents: "none", fontSize: "20px", left: "60%", top: "20%", backgroundColor: "", height: "100%", width: "100%" }} >
-                    <FiCornerRightDown style={{ position: "relative", zIndex: "10" }} />
-                </div>
-            }
-            {props.arrowType === 'leftDown' &&
-                <div style={{ position: "absolute", pointerEvents: "none", fontSize: "20px", left: "-60%", top: "20%", backgroundColor: "", height: "100%", width: "100%" }} >
-                    <FiCornerLeftDown style={{ position: "relative", zIndex: "10" }} />
+            {props.image &&
+                <div onClick={props.squareClicked} style={{ position: "absolute", width: "178px", height: "178px", right: "0px", top: "0px", zIndex: "20" }}>
+                    <img alt="c" src={props.image} style={{ width: "178px", height: "178px" }} />
                 </div>
             }
 
             {getQuestion()}
             <span style={{}}>
-                {/* {props.answerLetter} */}
                 {props.currentLetter}
             </span>
 

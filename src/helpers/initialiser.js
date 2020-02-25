@@ -1,16 +1,26 @@
-import {Img1} from '../Images/img1'
+import { Img1 } from '../Images/img1'
 
 export const getChallenges = () => {
     const challenges =
         [
-            
-            { question: "שחקן גרמני", answer: "טוני", x: 7, y: 4, questionX: 8, questionY: 4, direction: 'left' },
-            { question: "Where", answer: "here", x: 2, y: 1, questionX: 1, questionY: 1, direction: 'right' },
-            { question: "would you", answer: "yes", x: 2, y: 2, questionX: 1, questionY: 2, direction: 'right' },
-            { question: "really", answer: "maybe", x: 3, y: 5, questionX: 3, questionY: 4, direction: 'down' },
-            { question: "who", answer: "man", x: 2, y: 6, questionX: 1, questionY: 6, direction: 'right' },
-            { question: "something to smoke", answer: "weed", x: 3, y: 0, questionX: 4, questionY: 0, direction: 'down' },
-            { questionType:"image", answer: "ירדןהראל", x: 9, y: 0, questionX: 8, questionY: 0, direction: 'down', imageId: '0'},
+            { question: "עכשיו", answer: "כעת", x: 2, y: 10, questionX: 3, questionY: 10, direction: 'left' },
+            { question: "תואר לשחמטאי", answer: "רבאמן", x: 8, y: 10, questionX: 9, questionY: 10, direction: 'left' },
+            { question: "מחודשי השנה", answer: "שבט", x: 12, y: 10, questionX: 12, questionY: 9, direction: 'left' },
+            { question: "בן מעמד אצולה גרמני", answer: "יונקר", x: 4, y: 11, questionX: 5, questionY: 11, direction: 'left' },
+            { question: "חבר", answer: "אנסמבל", x: 11, y: 11, questionX: 12, questionY: 11, direction: 'left' },
+            { question: "צאצא ממין זכר", answer: "בן", x: 1, y: 12, questionX: 2, questionY: 12, direction: 'left' },
+            { question: "מוסרי", answer: "אתי", x: 5, y: 12, questionX: 6, questionY: 12, direction: 'left' },
+            { question: "מאכל בליל הסדר", answer: "מצה", x: 9, y: 12, questionX: 10, questionY: 12, direction: 'left' },
+            { question: "סמל צבאי", answer: "תג", x: 12, y: 12, questionX: 12, questionY: 11, direction: 'left' },
+
+            // { question: "שחקן גרמני", answer: "טוני", x: 7, y: 4, questionX: 8, questionY: 4, direction: 'left' },
+            // { question: "Where", answer: "here", x: 2, y: 1, questionX: 1, questionY: 1, direction: 'right' },
+            // { question: "would you", answer: "yes", x: 2, y: 2, questionX: 1, questionY: 2, direction: 'right' },
+            // { question: "should you", answer: "no", x: 1, y: 3, questionX: 1, questionY: 2, direction: 'down' },
+            // { question: "really", answer: "maybe", x: 3, y: 5, questionX: 3, questionY: 4, direction: 'down' },
+            // { question: "who", answer: "man", x: 2, y: 6, questionX: 1, questionY: 6, direction: 'right' },
+            // { question: "something to smoke", answer: "weed", x: 3, y: 0, questionX: 4, questionY: 0, direction: 'down' },
+            // { questionType:"image", answer: "ירדןהראל", x: 9, y: 0, questionX: 8, questionY: 0, direction: 'down', imageId: '0'},
         ];
     for (let i = 0; i < challenges.length; i++) {
         challenges[i].id = i;
@@ -43,7 +53,8 @@ export const getSquares = (challenges, boardWidth, boardHeight) => {
                 }
 
                 questionSquare.challenges.push(challenge);
-                questionSquare.arrowType = getChallengeArrowType(challenge.questionX, challenge.questionY, challenge.x, challenge.y, challenge.direction);
+                challenge.arrowType = getChallengeArrowType(challenge.questionX, challenge.questionY, challenge.x, challenge.y, challenge.direction);
+                questionSquare.arrowType = challenge.arrowType;
             }
         }
 
@@ -79,7 +90,7 @@ const getChallengeArrowType = (questionX, questionY, x, y, direction) => {
         if (questionY === y) {
             arrowType = 'left';
         }
-        else if (questionY > y) {
+        else if (questionY < y) {
             arrowType = 'downLeft';
         }
         else {
