@@ -27,11 +27,9 @@ function Square(props) {
             if (props.challenges.length === 1) {
                 questionContent =
                     <React.Fragment>
-                        {/* <FiArrowRight style={{ position: "absolute", zIndex: "10", fontSize: "20px", marginLeft: "50%", left: "45%" }} /> */}
                         {getArrow(props.challenges[0].arrowType)}
                         {props.challenges[0].question}
                     </React.Fragment>
-                //questionContent = props.challenges[0].question;
             }
             else
                 questionContent = <React.Fragment>
@@ -76,8 +74,6 @@ function Square(props) {
         return arrow;
     }
 
-
-
     return (
         <div
             onClick={props.squareClicked}
@@ -104,7 +100,6 @@ function Square(props) {
 
         </div >
     );
-
 }
 
 export default Square;

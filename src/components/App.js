@@ -18,7 +18,6 @@ function App() {
   const [letters, setLetters] = useState([]);
 
   const squareClicked = (newSelectedId) => {
-    console.log('App clicked: ' + newSelectedId);
     const previousSelectedSquareId = selectedSquareId;
     const isSelectedAgain = (newSelectedId === previousSelectedSquareId);
     const newSelectedSquare = squares[newSelectedId];
@@ -60,8 +59,7 @@ function App() {
 
   const keyPressedHandler = (e) => {
     let letter = String.fromCharCode(e.which);
-    console.log('pressed: ' + letter);
-    if (selectedSquareId) {
+    if (selectedSquareId != null) {
       const selectedSquare = squares[selectedSquareId];
       if (selectedSquare && selectedSquare.answerLetter && !solvedIds.includes(selectedSquareId)) {
         const newLetters = letters.slice();

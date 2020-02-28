@@ -86,6 +86,7 @@ export const getSquares = (challenges, boardWidth, boardHeight) => {
 
     challenges.forEach(challenge => {
 
+        // Set question square for challenge
         if (challenge.questionX != null && challenge.questionY != null) {
             let questionSquare = getSquare(squares, challenge.questionX, challenge.questionY, boardWidth, boardHeight);
             if (questionSquare) {
@@ -94,12 +95,13 @@ export const getSquares = (challenges, boardWidth, boardHeight) => {
                     questionSquare.image = Img1;
                 }
 
-                questionSquare.challenges.push(challenge);
                 challenge.arrowType = getChallengeArrowType(challenge.questionX, challenge.questionY, challenge.x, challenge.y, challenge.direction);
-                questionSquare.arrowType = challenge.arrowType;
+                questionSquare.challenges.push(challenge);
+                trySortSquareChallenges(questionSquare);
             }
         }
 
+        // Set answer squares for challenge
         let challengeSquares = getChallengeSquares(squares, challenge);
         for (let i = 0; i < challengeSquares.length; i++) {
             let currentSquare = challengeSquares[i];
@@ -107,7 +109,6 @@ export const getSquares = (challenges, boardWidth, boardHeight) => {
                 currentSquare.answerLetter = challenge.answer[i];
                 currentSquare.challenges.push(challenge);
             }
-
         }
     });
 
@@ -152,6 +153,25 @@ const getChallengeArrowType = (questionX, questionY, x, y, direction) => {
     }
 
     return arrowType;
+}
+
+const trySortSquareChallenges = (questionSquare) => {
+    if (questionSquare.challenges && questionSquare.challenges.length > 1) {
+        const arrowTypeOrder = [];
+        arrowTypeOrder['upRight'] = 0;
+        arrowTypeOrder['upLeft'] = 0;
+        arrowTypeOrder['left'] = 1;
+        arrowTypeOrder['right'] = 1;
+        arrowTypeOrder['leftDown'] = 2;
+        arrowTypeOrder['rightDown'] = 2;
+        arrowTypeOrder['downLeft'] = 3;
+        arrowTypeOrder['downRight'] = 3;
+        arrowTypeOrder['down'] = 4;
+
+        if (arrowTypeOrder[questionSquare.challenges[0].arrowType] > arrowTypeOrder[questionSquare.challenges[1].arrowType])   {
+            questionSquare.challenges = [questionSquare.challenges[1], questionSquare.challenges[0]];
+        }
+    }
 }
 
 export const getChallengeSquares = (squares, challenge) => {
