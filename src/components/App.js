@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Board from './Board';
 import ChallengeBar from './ChallengeBar';
-import { getChallenges, getSquares, getChallengeSquares, getSquare, getNextSquare } from '../helpers/initialiser'
+import { getChallenges, getSquares, getChallengeSquares, getSquare, getNextSquare, mapLetter } from '../helpers/initialiser'
 
 function App() {
   const board = { width: 13, height: 13, type: '2', horizontalDirection: 'rtl' };
@@ -58,7 +58,7 @@ function App() {
   };
 
   const keyPressedHandler = (e) => {
-    let letter = String.fromCharCode(e.which);
+    let letter = mapLetter(String.fromCharCode(e.which));
     if (selectedSquareId != null) {
       const selectedSquare = squares[selectedSquareId];
       if (selectedSquare && selectedSquare.answerLetter && !solvedIds.includes(selectedSquareId)) {

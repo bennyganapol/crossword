@@ -28,11 +28,11 @@ export const getChallenges = () => {
             { question: "חלק ברגל", answer: "עקב", x: 1, y: 10, questionX: 1, questionY: 9, direction: 'down' },
             { question: "אות באנגלית", answer: "וי", x: 3, y: 11, questionX: 3, questionY: 10, direction: 'down' },
             { question: "בכי מקוטע", answer: "יבבה", x: 7, y: 9, questionX: 7, questionY: 8, direction: 'down' },
-            { question: "אפר חם שנותרו בו גיצים, גחלת", answer: "רמצ", x: 8, y: 10, questionX: 8, questionY:9, direction: 'down' },
+            { question: "אפר חם שנותרו בו גיצים, גחלת", answer: "רמצ", x: 8, y: 10, questionX: 8, questionY: 9, direction: 'down' },
             { question: "סנטימטר רת", answer: "סמ", x: 9, y: 11, questionX: 9, questionY: 10, direction: 'down' },
             { question: "תקלה בתוכנת מחשב", answer: "באג", x: 11, y: 10, questionX: 11, questionY: 9, direction: 'down' },
 
-            { question: "עיר בפולין", answer: "ירוסלב", x: 7, y: 9, questionX: 8, questionY:9, direction: 'left' },
+            { question: "עיר בפולין", answer: "ירוסלב", x: 7, y: 9, questionX: 8, questionY: 9, direction: 'left' },
             { question: "רצועה, קו", answer: "פס", x: 10, y: 9, questionX: 11, questionY: 9, direction: 'left' },
             { question: "מרבד", answer: "שטיח", x: 11, y: 8, questionX: 12, questionY: 8, direction: 'left' },
             { question: "מעקב", answer: "התחקות", x: 6, y: 8, questionX: 7, questionY: 8, direction: 'left' },
@@ -60,14 +60,32 @@ export const getChallenges = () => {
             { question: "מוסרי", answer: "אתי", x: 5, y: 12, questionX: 6, questionY: 12, direction: 'left' },
             { question: "מאכל בליל הסדר", answer: "מצה", x: 9, y: 12, questionX: 10, questionY: 12, direction: 'left' },
             { question: "סמל צבאי", answer: "תג", x: 12, y: 12, questionX: 12, questionY: 11, direction: 'left' },
-            
-             { questionType:"image", answer: "ירדןהראל", x: 6, y: 4, questionX: 5, questionY: 4, direction: 'down', imageId: '0'},
-             { questionType:"image", answer: "הראלמויאל", x: 9, y: 2, questionX: 12, questionY: 0, direction: 'left', imageId: '0'},
+
+            { questionType: "image", answer: "ירדןהראל", x: 6, y: 4, questionX: 5, questionY: 4, direction: 'down', imageId: '0' },
+            { questionType: "image", answer: "הראלמויאל", x: 9, y: 2, questionX: 12, questionY: 0, direction: 'left', imageId: '0' },
         ];
     for (let i = 0; i < challenges.length; i++) {
         challenges[i].id = i;
     }
     return challenges;
+}
+
+export const mapLetter = (letter) => {
+    let returnMappedLetter = letter;
+
+    const lettersMapping = {
+        "ן": "נ",
+        "ם": "מ",
+        "ץ": "צ",
+        "ף": "פ",
+        "ך": "כ",
+    };
+
+    if (lettersMapping[letter]) {
+        returnMappedLetter = lettersMapping[letter];
+    }
+
+    return returnMappedLetter;
 }
 
 export const getSquares = (challenges, boardWidth, boardHeight) => {
@@ -106,7 +124,7 @@ export const getSquares = (challenges, boardWidth, boardHeight) => {
         for (let i = 0; i < challengeSquares.length; i++) {
             let currentSquare = challengeSquares[i];
             if (currentSquare) {
-                currentSquare.answerLetter = challenge.answer[i];
+                currentSquare.answerLetter = mapLetter(challenge.answer[i]);
                 currentSquare.challenges.push(challenge);
             }
         }
@@ -168,7 +186,7 @@ const trySortSquareChallenges = (questionSquare) => {
         arrowTypeOrder['downRight'] = 3;
         arrowTypeOrder['down'] = 4;
 
-        if (arrowTypeOrder[questionSquare.challenges[0].arrowType] > arrowTypeOrder[questionSquare.challenges[1].arrowType])   {
+        if (arrowTypeOrder[questionSquare.challenges[0].arrowType] > arrowTypeOrder[questionSquare.challenges[1].arrowType]) {
             questionSquare.challenges = [questionSquare.challenges[1], questionSquare.challenges[0]];
         }
     }
@@ -228,6 +246,8 @@ export const getNextSquare = (squares, squareId, direction, nextSize = 1) => {
 
     return (nextSquare && nextSquare.answerLetter) ? nextSquare.id : squareId;
 }
+
+
 
 export const getSquare = (squares, x, y, boardWidth, boardHeight) => {
     if (boardWidth && boardHeight) {
