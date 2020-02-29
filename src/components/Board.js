@@ -42,11 +42,12 @@ function Board(props) {
                         challengeSelected={isChallengeSelected(id)}
                         squareClicked={() => squareClicked(id)}
                         currentLetter={props.letters[id]}
+                        horizontalDirection={props.horizontalDirection}
                         {...props.squares[id]}
                     />)
             }
             board.push(
-                <div style={{ display: "flex", flex: "1", flexDirection: "row" }}>{row}</div>
+                <div style={{ display: "flex", flex: "1", flexDirection: "row", maxHeight:"60px" }}>{row}</div>
             );
         }
 

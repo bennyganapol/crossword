@@ -7,9 +7,9 @@ Arrowword:
 (V) Show current challenge
 (V) 2 questions in a square (set order)
 (V) Auto switch heberew's end letters
-- callenge square clicked - pick first square + if chllage already selected do nothing
+(VX) Support multiple word answer: (2.5)
+- callenge square clicked - pick first square + if challage already selected do nothing
 - Image challenge - fix arrows and image location
-- Support multiple word answer: (2.5)
 
 
 

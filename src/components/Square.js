@@ -29,6 +29,7 @@ function Square(props) {
                     <React.Fragment>
                         {getArrow(props.challenges[0].arrowType)}
                         {props.challenges[0].question}
+                        {getMultiWordPart(props.challenges[0])}
                     </React.Fragment>
             }
             else
@@ -36,10 +37,12 @@ function Square(props) {
                     <div style={{ display: "flex", flex: "1", alignItems: "center", justifyContent: "center", width: "100%", borderBottom: "1px solid gray" }}>
                         {getArrow(props.challenges[0].arrowType)}
                         {props.challenges[0].question}
+                        {getMultiWordPart(props.challenges[0])}
                     </div>
-                    <div style={{ display: "flex", flex: "1", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ display: "flex", flex: "1", alignItems: "center", justifyContent: "center", width: "100%" }}>
                         {getArrow(props.challenges[1].arrowType)}
                         {props.challenges[1].question}
+                        {getMultiWordPart(props.challenges[1])}
                     </div>
                 </React.Fragment>;
         }
@@ -65,13 +68,28 @@ function Square(props) {
                 arrow = <FiCornerLeftDown style={{ position: "absolute", zIndex: "10", fontSize: "20px", marginRight: "50%", right: "45%" }} />
                 break;
             case 'downLeft':
-                arrow = <FiCornerDownLeft style={{ position: "absolute", zIndex: "10", fontSize: "20px",  marginTop: "50%", top: "45%" }} />
+                arrow = <FiCornerDownLeft style={{ position: "absolute", zIndex: "10", fontSize: "20px", marginTop: "50%", top: "45%" }} />
                 break;
 
             default:
                 break;
         }
         return arrow;
+    }
+
+    const getMultiWordPart = (challenge) => {
+        let multiWordPart = null;
+        if (challenge.multi) {
+            multiWordPart = " (";
+            const multiwordArray = challenge.multi.slice();
+            if (props.horizontalDirection === 'rtl') {
+                multiwordArray.reverse();
+            }
+            
+            multiWordPart += multiwordArray.join(",");
+            multiWordPart += ") ";
+        }
+        return multiWordPart;
     }
 
     return (

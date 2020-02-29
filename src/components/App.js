@@ -184,7 +184,7 @@ function App() {
 
   return (
     <div>
-      <span>Challenges: {solvedChallengesIds.length}\{challenges.length}</span>
+      <span>{solvedChallengesIds.length}\{challenges.length}</span>
       {(solvedChallengesIds.length === challenges.length) && <span> Game won !</span>}
       <ChallengeBar
         selectedChallenge={challenges[selectedChallengeId]}
@@ -204,6 +204,7 @@ function App() {
         width={board.width}
         height={board.height}
         squareSize={60}
+        horizontalDirection={board.horizontalDirection}
         squareClicked={(x, y) => squareClicked(x, y)}
       />
     </div>
