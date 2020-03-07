@@ -17,8 +17,9 @@ function App() {
   const [selectDirection, setSelectDirection] = useState();
   const [letters, setLetters] = useState([]);
 
-  const squareClicked = (newSelectedId) => {
+  const squareSelected = (newSelectedId) => {
     const previousSelectedSquareId = selectedSquareId;
+    // const previousSelectedChallengeId = selectedChallengeId;
     const isSelectedAgain = (newSelectedId === previousSelectedSquareId);
     const newSelectedSquare = squares[newSelectedId];
 
@@ -30,8 +31,8 @@ function App() {
         newChallengeIndex = 0;
       }
       else {
-        if (isSelectedAgain) {
-          if (selectDirection === newSelectedSquare.challenges[0].direction) {
+        if (isSelectedAgain || (newSelectedSquare.isQuestionSquare)) {
+          if (selectedChallengeId === newSelectedSquare.challenges[0].id) {
             newChallengeIndex = 1;
           }
           else {
@@ -47,10 +48,15 @@ function App() {
           }
         }
       }
+
       const newChallenge = newSelectedSquare.challenges[newChallengeIndex];
-      setSelectedSquares(getChallengeSquares(squares, newChallenge).map(square => ({ id: square.id })));
+      const challengeSquares = getChallengeSquares(squares, newChallenge).map(square => ({ id: square.id }));
+      setSelectedSquares(challengeSquares);
       setSelectDirection(newChallenge.direction);
       setSelectedChallengeId(newChallenge.id);
+      if (newSelectedSquare.isQuestionSquare === true) {
+        setSelectedSquareId(challengeSquares[0].id);
+      }
     }
     else {
       setSelectedSquares();
@@ -120,22 +126,22 @@ function App() {
       const selectedSquare = squares[selectedSquareId];
       const newSquare = getSquare(squares, Math.min(selectedSquare.x + 1, board.width - 1), selectedSquare.y);
       // setSelectedSquareId();
-      squareClicked(newSquare.id);
+      squareSelected(newSquare.id);
     }
     else if (key === "ArrowLeft") {
       const selectedSquare = squares[selectedSquareId];
       const newSquare = getSquare(squares, Math.max(selectedSquare.x - 1, 0), selectedSquare.y);
-      squareClicked(newSquare.id);
+      squareSelected(newSquare.id);
     }
     else if (key === "ArrowUp") {
       const selectedSquare = squares[selectedSquareId];
       const newSquare = getSquare(squares, selectedSquare.x, Math.max(selectedSquare.y - 1, 0));
-      squareClicked(newSquare.id);
+      squareSelected(newSquare.id);
     }
     else if (key === "ArrowDown") {
       const selectedSquare = squares[selectedSquareId];
       const newSquare = getSquare(squares, selectedSquare.x, Math.min(selectedSquare.y + 1, board.height - 1));
-      squareClicked(newSquare.id);
+      squareSelected(newSquare.id);
     }
   }
 
@@ -193,7 +199,7 @@ function App() {
         solvedIds={solvedIds}
         letters={letters}
         horizontalDirection={board.horizontalDirection}
-        squareClicked={(id) => squareClicked(id)}
+        squareClicked={(id) => squareSelected(id, "clicked")}
       />
       <Board
         selectedSquareId={selectedSquareId}
@@ -205,7 +211,7 @@ function App() {
         height={board.height}
         squareSize={60}
         horizontalDirection={board.horizontalDirection}
-        squareClicked={(x, y) => squareClicked(x, y)}
+        squareClicked={(id) => squareSelected(id, "clicked")}
       />
     </div>
   );

@@ -62,6 +62,7 @@ function Board(props) {
             defaultPositionX={100}
             defaultPositionY={200}
             pan={{ paddingSize: 0 }}
+            doubleClick={{disabled: true}}
         >
             {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                 <React.Fragment>
