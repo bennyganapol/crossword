@@ -8,8 +8,8 @@ Arrowword:
 (V) 2 questions in a square (set order)
 (V) Auto switch heberew's end letters
 (V) Support multiple word answer: (2.5)
-- callenge square clicked - pick first square + if challage already selected do nothing
-- Image challenge - fix arrows and image location
+(V) callenge square clicked - pick first square + if challage already selected do nothing
+(V) Image challenge - fix arrows and image location
 
 
 

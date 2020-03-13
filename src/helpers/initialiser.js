@@ -1,4 +1,4 @@
-import { Img1 } from '../Images/img1'
+import { Img1, Img2 } from '../Images/img1'
 
 export const getChallenges = () => {
     const challenges =
@@ -6,7 +6,7 @@ export const getChallenges = () => {
             { question: "מבנייני הפועל בדקדוק ", answer: "קל", x: 3, y: 8, questionX: 3, questionY: 7, direction: 'down' },
             { question: "חודש", answer: "ירח", x: 8, y: 6, questionX: 8, questionY: 5, direction: 'down' },
             { question: "זוג עצמות בפנים", answer: "לסת", x: 1, y: 6, questionX: 1, questionY: 5, direction: 'down' },
-            { question: "משירי אריאל זילבר", answer: "שמששמש", x: 11, y: 3, questionX: 12, questionY: 3, direction: 'down', multi: [3,3] },
+            { question: "משירי אריאל זילבר", answer: "שמששמש", x: 11, y: 3, questionX: 12, questionY: 3, direction: 'down', multi: [3, 3] },
             { question: "טלה", answer: "שה", x: 10, y: 4, questionX: 10, questionY: 3, direction: 'down' },
             { question: "נוזל לציפורניים", answer: "לק", x: 0, y: 0, questionX: 1, questionY: 0, direction: 'down' },
             { question: "בירת מלטה", answer: "ולטה", x: 1, y: 1, questionX: 1, questionY: 0, direction: 'down' },
@@ -14,7 +14,7 @@ export const getChallenges = () => {
             { question: "אות יוונית", answer: "קסי", x: 3, y: 0, questionX: 4, questionY: 0, direction: 'down' },
             { question: "גם כן", answer: "נמי", x: 5, y: 1, questionX: 5, questionY: 0, direction: 'down' },
             { question: "זכרונו לברכה ר\"ת", answer: "זל", x: 6, y: 1, questionX: 6, questionY: 0, direction: 'down' },
-            { question: "עיר ההימורים בארהב", answer: "לאסוגאס", x: 7, y: 1, questionX: 7, questionY: 0, direction: 'down', multi: [3,4] },
+            { question: "עיר ההימורים בארהב", answer: "לאסוגאס", x: 7, y: 1, questionX: 7, questionY: 0, direction: 'down', multi: [3, 4] },
             { question: "מין עוף טרופי", answer: "קורול", x: 8, y: 0, questionX: 9, questionY: 0, direction: 'down' },
             { question: "קידומת הולנדית", answer: "ון", x: 4, y: 2, questionX: 4, questionY: 1, direction: 'down' },
             { question: "מחשבה", answer: "הרהור", x: 9, y: 2, questionX: 9, questionY: 1, direction: 'down' },
@@ -45,14 +45,14 @@ export const getChallenges = () => {
             { question: "מתגורר", answer: "גר", x: 7, y: 5, questionX: 8, questionY: 5, direction: 'left' },
             { question: "התעכבו, נשארו", answer: "שהו", x: 11, y: 5, questionX: 12, questionY: 5, direction: 'left' },
             { question: "אות בעברית", answer: "הא", x: 1, y: 4, questionX: 2, questionY: 4, direction: 'left' },
-            { question: "מרמטכלי צהל", answer: "משהלוי", x: 11, y: 4, questionX: 12, questionY: 4, direction: 'left', multi: [3,3] },
+            { question: "מרמטכלי צהל", answer: "משהלוי", x: 11, y: 4, questionX: 12, questionY: 4, direction: 'left', multi: [3, 3] },
             { question: "כרס", answer: "בטן", x: 2, y: 3, questionX: 3, questionY: 3, direction: 'left' },
             { question: "מטבע יפני", answer: "ין", x: 5, y: 3, questionX: 6, questionY: 3, direction: 'left' },
             { question: "אי געשי באנטרטיקה", answer: "רוס", x: 9, y: 3, questionX: 10, questionY: 3, direction: 'left' },
             { question: "עיר בהולנד", answer: "ולזן", x: 8, y: 1, questionX: 9, questionY: 1, direction: 'left' },
             { question: "מלאי", answer: "סטוק", x: 3, y: 1, questionX: 4, questionY: 1, direction: 'left' },
             { question: "עכשיו", answer: "כעת", x: 2, y: 10, questionX: 3, questionY: 10, direction: 'left' },
-            { question: "תואר לשחמטאי", answer: "רבאמן", x: 8, y: 10, questionX: 9, questionY: 10, direction: 'left',  multi: [2,3] },
+            { question: "תואר לשחמטאי", answer: "רבאמן", x: 8, y: 10, questionX: 9, questionY: 10, direction: 'left', multi: [2, 3] },
             { question: "מחודשי השנה", answer: "שבט", x: 12, y: 10, questionX: 12, questionY: 9, direction: 'left' },
             { question: "בן מעמד אצולה גרמני", answer: "יונקר", x: 4, y: 11, questionX: 5, questionY: 11, direction: 'left' },
             { question: "חבר", answer: "אנסמבל", x: 11, y: 11, questionX: 12, questionY: 11, direction: 'left' },
@@ -61,8 +61,8 @@ export const getChallenges = () => {
             { question: "מאכל בליל הסדר", answer: "מצה", x: 9, y: 12, questionX: 10, questionY: 12, direction: 'left' },
             { question: "סמל צבאי", answer: "תג", x: 12, y: 12, questionX: 12, questionY: 11, direction: 'left' },
 
-            { questionType: "image", answer: "ירדןהראל", x: 6, y: 4, questionX: 5, questionY: 4, direction: 'down', imageId: '0' },
-            { questionType: "image", answer: "הראלמויאל", x: 9, y: 2, questionX: 12, questionY: 0, direction: 'left', imageId: '0' },
+            { questionType: "image", answer: "ירדןהראל", x: 6, y: 4, questionX: 5, questionY: 4, imageX: 5, imageY: 4, direction: 'down', imageId: '1' },
+            { questionType: "image", answer: "הראלמויאל", x: 9, y: 2, questionX: 10, questionY: 2, imageX: 12, imageY: 0, direction: 'left', imageId: '2' },
         ];
     for (let i = 0; i < challenges.length; i++) {
         challenges[i].id = i;
@@ -109,15 +109,39 @@ export const getSquares = (challenges, boardWidth, boardHeight) => {
             let questionSquare = getSquare(squares, challenge.questionX, challenge.questionY, boardWidth, boardHeight);
             if (questionSquare) {
                 questionSquare.isQuestionSquare = true;
-                if (challenge.imageId) {
-                    questionSquare.image = Img1;
-                }
+                // if (challenge.imageId) {
+                //     questionSquare.image = Img1;
+                // }
 
                 challenge.arrowType = getChallengeArrowType(challenge.questionX, challenge.questionY, challenge.x, challenge.y, challenge.direction);
                 questionSquare.challenges.push(challenge);
                 trySortSquareChallenges(questionSquare);
             }
         }
+
+        // Set image square for image challenges
+        if (challenge.imageX != null && challenge.imageY != null) {
+            let imageSquare = getSquare(squares, challenge.imageX, challenge.imageY, boardWidth, boardHeight);
+            if (imageSquare) {
+                imageSquare.isQuestionSquare = true;
+
+                if (challenge.imageId === "1") {
+                    imageSquare.image = Img1;
+                }
+                else if (challenge.imageId === "2") {
+                    imageSquare.image = Img2;
+                }
+                
+                // challenge.arrowType = getChallengeArrowType(challenge.questionX, challenge.questionY, challenge.x, challenge.y, challenge.direction);
+                if (challenge.questionX !== challenge.imageX && challenge.questionY && challenge.imageX) {
+                    imageSquare.challenges.push(challenge);
+                    trySortSquareChallenges(imageSquare);
+                }
+
+            }
+        }
+
+
 
         // Set answer squares for challenge
         let challengeSquares = getChallengeSquares(squares, challenge);
