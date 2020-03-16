@@ -7,8 +7,8 @@ import { getChallenges, getSquares, getChallengeSquares, getSquare, getNextSquar
 function App() {
   const board = { width: 13, height: 13, type: '2', horizontalDirection: 'rtl' };
 
-  const [challenges] = useState(getChallenges());
-  const [squares] = useState(getSquares(challenges, board.width, board.height));
+  const [challenges, setChallenges] = useState();
+  const [squares, setSquares] = useState();
   const [selectedSquareId, setSelectedSquareId] = useState();
   const [selectedSquares, setSelectedSquares] = useState([]);
   const [selectedChallengeId, setSelectedChallengeId] = useState(0);
@@ -19,7 +19,6 @@ function App() {
 
   const squareSelected = (newSelectedId) => {
     const previousSelectedSquareId = selectedSquareId;
-    // const previousSelectedChallengeId = selectedChallengeId;
     const isSelectedAgain = (newSelectedId === previousSelectedSquareId);
     const newSelectedSquare = squares[newSelectedId];
 
@@ -177,6 +176,12 @@ function App() {
     }
   }
 
+  const getChallengesData = async () => {
+    const newChallenges = await getChallenges();
+    setChallenges(newChallenges);
+    setSquares(getSquares(newChallenges, board.width, board.height));
+  }
+
   useEffect(() => {
     document.addEventListener("keypress", keyPressedHandler, false);
     document.addEventListener("keydown", keyDownHandler, false);
@@ -186,34 +191,41 @@ function App() {
     };
   });
 
-
+  useEffect(() => {
+    getChallengesData();
+  }, []);
 
   return (
-    <div>
-      <span>{solvedChallengesIds.length}\{challenges.length}</span>
-      {(solvedChallengesIds.length === challenges.length) && <span> Game won !</span>}
-      <ChallengeBar
-        selectedChallenge={challenges[selectedChallengeId]}
-        challengeSquares={getChallengeSquares(squares, challenges[selectedChallengeId])}
-        selectedSquareId={selectedSquareId}
-        solvedIds={solvedIds}
-        letters={letters}
-        horizontalDirection={board.horizontalDirection}
-        squareClicked={(id) => squareSelected(id, "clicked")}
-      />
-      <Board
-        selectedSquareId={selectedSquareId}
-        solvedIds={solvedIds}
-        selectedSquares={selectedSquares}
-        squares={squares}
-        letters={letters}
-        width={board.width}
-        height={board.height}
-        squareSize={60}
-        horizontalDirection={board.horizontalDirection}
-        squareClicked={(id) => squareSelected(id, "clicked")}
-      />
-    </div>
+    <React.Fragment>
+      {!challenges && <div>Loading...</div>}
+      {challenges && squares && 
+        <div>
+          <span>{solvedChallengesIds.length}\{challenges.length}</span>
+          {(solvedChallengesIds.length === challenges.length) && <span> Game won !</span>}
+          <ChallengeBar
+            selectedChallenge={challenges[selectedChallengeId]}
+            challengeSquares={getChallengeSquares(squares, challenges[selectedChallengeId])}
+            selectedSquareId={selectedSquareId}
+            solvedIds={solvedIds}
+            letters={letters}
+            horizontalDirection={board.horizontalDirection}
+            squareClicked={(id) => squareSelected(id, "clicked")}
+          />
+          <Board
+            selectedSquareId={selectedSquareId}
+            solvedIds={solvedIds}
+            selectedSquares={selectedSquares}
+            squares={squares}
+            letters={letters}
+            width={board.width}
+            height={board.height}
+            squareSize={60}
+            horizontalDirection={board.horizontalDirection}
+            squareClicked={(id) => squareSelected(id, "clicked")}
+          />
+        </div>
+      }
+    </React.Fragment>
   );
 }
 
