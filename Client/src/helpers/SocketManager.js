@@ -1,4 +1,4 @@
-import socketio from "socket.io-client";
+import socketio from 'socket.io-client';
 
 export const socket = socketio(`${window.location.hostname}:4000`);
 const events = [];
@@ -17,7 +17,7 @@ class SocketManager {
     //   //alert('Challenge solved: ' + challengeId);
     //   const event = new CustomEvent("challengeSolved", { "detail": challengeId });
     //   document.dispatchEvent(event);
-      
+
     //   // if (events['challengeSolved'] != null) {
     //   //   events['challengeSolved'](challengeId);
     //   // }
@@ -31,11 +31,6 @@ class SocketManager {
   registerEvent(eventName, func) {
     events[eventName] = func;
   }
-
 }
 
 export let socketManager = new SocketManager();
-
-
-
-
