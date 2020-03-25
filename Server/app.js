@@ -1,21 +1,16 @@
-/* eslint-disable no-console */
-//const express = require('express');
 import express from 'express';
+import http from 'http';
+import socketio from 'socket.io';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { gamesRouter } from './routes/games_router';
+// import bodyParser from 'body-parser';
 
-// dotenv.config();
-const app = express();
+dotenv.config();
 const port = 4000;
-// const dbUrl = process.env.DATABASE_URL;
-
-// // Connecting to local MongoDB
-// mongoose.connect(dbUrl, { useNewUrlParser: true });
-// const db = mongoose.connection;
-// db.on('error', (error) => { console.error(error); });
-// db.once('open', () => console.log('Connected to Database'));
-
+const app = express();
+const httpServer = http.Server(app);
+const io = socketio(httpServer);
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -23,6 +18,25 @@ app.use(cors());
 
 app.use('/games', gamesRouter);
 
-app.listen(port, () => {
-  console.log(`Running on port ${port}`);
+
+io.on('connection', (socket) =>{
+  console.log(`new connection: ${socket.id}`);
+  socket.on('newconnection', function (data) {
+    console.log('new connection data:' +  data);
+    io.emit('newconnection', 'dfdfdf');
+  });
+
+  socket.on('challengeSolved', function (challengeId) {
+    console.log('chellenge solved:' +  challengeId);
+    socket.broadcast.emit('challengeSolved', challengeId);
+  });
+  
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+})
+
+var server = httpServer.listen(port, () => {
+  //console.log('server is running on port', server.address().port);
+  console.log(`Running on port ${server.address().port}`);
 });

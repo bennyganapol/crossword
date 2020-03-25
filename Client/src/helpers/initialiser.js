@@ -2,7 +2,7 @@
 import { Img1, Img2 } from '../Images/img1'
 
 export const getChallenges = async () => {
-    let res = await axios.post('http://localhost:4000/games');
+    let res = await axios.post(`${window.location.protocol}//${window.location.hostname}:4000/games`);
     console.log(res.data.challenges);
     let { challenges } = res.data;
     

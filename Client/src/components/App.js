@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+
 import './App.css';
 import Board from './Board';
 import ChallengeBar from './ChallengeBar';
+import { socket, socketManager } from '../helpers/SocketManager';
 import { getChallenges, getSquares, getChallengeSquares, getSquare, getNextSquare, mapLetter } from '../helpers/initialiser'
 
 function App() {
   const board = { width: 13, height: 13, type: '2', horizontalDirection: 'rtl' };
+
 
   const [challenges, setChallenges] = useState();
   const [squares, setSquares] = useState();
@@ -169,9 +172,9 @@ function App() {
           newSolvedChallengesIds.push(selectedSquare.challenges[i].id)
         }
 
+        socketManager.challengeSolved(selectedSquare.challenges[i].id);
         setSolvedIds(newSolvedIds);
         setSolvedChallengesIds(newSolvedChallengesIds);
-
       }
     }
   }
@@ -182,12 +185,44 @@ function App() {
     setSquares(getSquares(newChallenges, board.width, board.height));
   }
 
+  const ioInChallengeSolved = (challengeId) => {
+    const newLetters = letters.slice();
+    const newSolvedIds = solvedIds.slice();
+    const newSolvedChallengesIds = solvedChallengesIds.slice();
+    
+    const challenge = challenges[challengeId];
+    const challengeSquares = getChallengeSquares(squares, challenge);
+
+    for (let i = 0; i < challengeSquares.length; i++) {
+      const square = challengeSquares[i];
+      newLetters[square.id] = square.answerLetter;
+      if (!newSolvedIds.includes(square.id)) {
+        newSolvedIds.push(square.id)
+      }
+    }
+
+    if (!newSolvedChallengesIds.includes(challengeId)) {
+      newSolvedChallengesIds.push(challengeId)
+    }
+
+    setLetters(newLetters);
+    setSolvedIds(newSolvedIds);
+    setSolvedChallengesIds(newSolvedChallengesIds);
+    
+    for (let s = 0; s < challengeSquares.length; s++) {
+      const square = challengeSquares[s];
+    }
+  }
+
   useEffect(() => {
     document.addEventListener("keypress", keyPressedHandler, false);
     document.addEventListener("keydown", keyDownHandler, false);
+    socket.on('challengeSolved', ioInChallengeSolved);
+
     return () => {
       document.removeEventListener('keypress', keyPressedHandler);
       document.removeEventListener('keydown', keyDownHandler);
+      socket.off("challengeSolved");
     };
   });
 
@@ -198,7 +233,7 @@ function App() {
   return (
     <React.Fragment>
       {!challenges && <div>Loading...</div>}
-      {challenges && squares && 
+      {challenges && squares &&
         <div>
           <span>{solvedChallengesIds.length}\{challenges.length}</span>
           {(solvedChallengesIds.length === challenges.length) && <span> Game won !</span>}
