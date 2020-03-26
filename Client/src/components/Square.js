@@ -50,6 +50,16 @@ function Square(props) {
         return questionContent;
     }
 
+    const getLetter = () => {
+        let letterSpan = null;
+        if (props.currentLetter) {
+            letterSpan = <span style={{fontWeight: "bold"}}>{props.currentLetter}</span> ;
+        } else if (props.otherPlayersLetter && !props.challengeSelected && !props.selected){
+            letterSpan = <span style={{fontWeight: "bold", color: "rgba(0, 0, 0, 0.2)"}}>{props.otherPlayersLetter}</span> ;
+        }
+        return letterSpan;
+    }
+
     const getArrow = (arrowType) => {
         let arrow = null;
         switch (arrowType) {
@@ -113,9 +123,8 @@ function Square(props) {
             }
 
             {getQuestion()}
-            <span style={{}}>
-                {props.currentLetter}
-            </span>
+            {getLetter()}
+            
 
         </div >
     );

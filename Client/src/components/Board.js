@@ -20,14 +20,6 @@ function Board(props) {
         return (props.selectedSquares && props.selectedSquares.some(s => s.id === id));
     }
 
-    // const getLetter = (id) => {
-    //     let letter = null;
-    //     if (props.letters && props.letters[id]) {
-    //         letter = props.letters[id];
-    //     }
-    //     return letter;
-    // }
-
     const renderBoard = () => {
         const board = [];
 
@@ -37,17 +29,19 @@ function Board(props) {
                 const id = x + (y * props.width);
                 row.push(
                     <Square
+                        key={id}
                         selected={isSelected(id)}
                         isSolved={isSolved(id)}
                         challengeSelected={isChallengeSelected(id)}
                         squareClicked={() => squareClicked(id)}
                         currentLetter={props.letters[id]}
+                        otherPlayersLetter={props.otherPlayersLetters[id]}
                         horizontalDirection={props.horizontalDirection}
                         {...props.squares[id]}
                     />)
             }
             board.push(
-                <div style={{ display: "flex", flex: "1", flexDirection: "row", maxHeight:"60px" }}>{row}</div>
+                <div key={y} style={{ display: "flex", flex: "1", flexDirection: "row", maxHeight:"60px" }}>{row}</div>
             );
         }
 

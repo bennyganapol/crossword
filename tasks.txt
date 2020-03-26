@@ -13,6 +13,12 @@ Arrowword:
 
 
 
+Collaboration:
+(V) Lower opacity of other players letters
+(V) Broadcast also a deletion of a letter
+(V)) Dont show other players letters in squares of selected challenge
+
+
 General:
 - Put challenges and board in a json
 - At least 2 AarrowWords

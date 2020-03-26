@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import './App.css';
 import Board from './Board';
 import ChallengeBar from './ChallengeBar';
@@ -8,7 +7,6 @@ import { getChallenges, getSquares, getChallengeSquares, getSquare, getNextSquar
 
 function App() {
   const board = { width: 13, height: 13, type: '2', horizontalDirection: 'rtl' };
-
 
   const [challenges, setChallenges] = useState();
   const [squares, setSquares] = useState();
@@ -19,6 +17,7 @@ function App() {
   const [solvedChallengesIds, setSolvedChallengesIds] = useState([]);
   const [selectDirection, setSelectDirection] = useState();
   const [letters, setLetters] = useState([]);
+  const [otherPlayersLetters, setOtherPlayersLetters] = useState([]);
 
   const squareSelected = (newSelectedId) => {
     const previousSelectedSquareId = selectedSquareId;
@@ -73,8 +72,8 @@ function App() {
         const newLetters = letters.slice();
         newLetters[selectedSquareId] = letter;
         setLetters(newLetters);
-
         checkAnswer(selectedSquare, newLetters)
+        socketManager.challengeTyping(selectedSquareId, letter);
       }
 
       const nextSquareId = getNextSquare(squares, selectedSquareId, selectDirection);
@@ -116,11 +115,12 @@ function App() {
       }
 
       for (let i = 0; i < deleteSquareIds.length; i++) {
-        const deleteID = deleteSquareIds[i];
-        if (letters[deleteID] != null && !solvedIds.includes(deleteID)) {
+        const deleteId = deleteSquareIds[i];
+        if (letters[deleteId] != null && !solvedIds.includes(deleteId)) {
           const newLetters = letters.slice();
-          newLetters[deleteID] = null;
+          newLetters[deleteId] = null;
           setLetters(newLetters);
+          socketManager.challengeTyping(deleteId, "");
         }
       }
     }
@@ -172,9 +172,9 @@ function App() {
           newSolvedChallengesIds.push(selectedSquare.challenges[i].id)
         }
 
-        socketManager.challengeSolved(selectedSquare.challenges[i].id);
         setSolvedIds(newSolvedIds);
         setSolvedChallengesIds(newSolvedChallengesIds);
+        socketManager.challengeSolved(selectedSquare.challenges[i].id);
       }
     }
   }
@@ -210,15 +210,23 @@ function App() {
     setSolvedChallengesIds(newSolvedChallengesIds);
   }
 
+  const ioInChallengeTyping = (squareId, letter) => {
+    const newLetters = otherPlayersLetters.slice()
+    newLetters[squareId] = letter;
+    setOtherPlayersLetters(newLetters)
+  }
+
   useEffect(() => {
     document.addEventListener("keypress", keyPressedHandler, false);
     document.addEventListener("keydown", keyDownHandler, false);
     socket.on('challengeSolved', ioInChallengeSolved);
+    socket.on('challengeTyping', ioInChallengeTyping);
 
     return () => {
       document.removeEventListener('keypress', keyPressedHandler);
       document.removeEventListener('keydown', keyDownHandler);
       socket.off("challengeSolved");
+      socket.off("challengeTyping");
     };
   });
 
@@ -239,6 +247,7 @@ function App() {
             selectedSquareId={selectedSquareId}
             solvedIds={solvedIds}
             letters={letters}
+            otherPlayersLetters={otherPlayersLetters}
             horizontalDirection={board.horizontalDirection}
             squareClicked={(id) => squareSelected(id, "clicked")}
           />
@@ -248,6 +257,7 @@ function App() {
             selectedSquares={selectedSquares}
             squares={squares}
             letters={letters}
+            otherPlayersLetters={otherPlayersLetters}
             width={board.width}
             height={board.height}
             squareSize={60}

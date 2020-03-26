@@ -5,23 +5,14 @@ const events = [];
 
 class SocketManager {
   constructor() {
+    this.name = Math.random().toString(36).substring(10);
     socket.emit('newconnection', 'test123');
-
     socket.on('newconnection', function (msg) {
-      //alert(msg);
     });
+  }
 
-    // events['challengeSolved'] = () => { alert('c solved!'); };
-
-    // socket.on('challengeSolved', (challengeId) => {
-    //   //alert('Challenge solved: ' + challengeId);
-    //   const event = new CustomEvent("challengeSolved", { "detail": challengeId });
-    //   document.dispatchEvent(event);
-      
-    //   // if (events['challengeSolved'] != null) {
-    //   //   events['challengeSolved'](challengeId);
-    //   // }
-    // });
+  challengeTyping(squareId, letter) {
+    socket.emit('challengeTyping', squareId, letter);
   }
 
   challengeSolved(challengeId) {
@@ -31,7 +22,6 @@ class SocketManager {
   registerEvent(eventName, func) {
     events[eventName] = func;
   }
-
 }
 
 export let socketManager = new SocketManager();

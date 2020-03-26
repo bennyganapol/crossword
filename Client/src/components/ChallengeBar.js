@@ -40,43 +40,33 @@ function ChallengeBar(props) {
             if (spacesIndexes && spacesIndexes.includes(i)) {
                 squares.push(<div
                     style={{ display: "flex", alignItems: "center", justifyContent: "center", flex: "0.5", }}
-                        ></ div>);
+                ></ div>);
             }
             squares.push(
                 <Square
-                        selected={isSelected(square.id)}
-                        isSolved={isSolved(square.id)}
-                        challengeSelected={true}
-                        squareClicked={() => squareClicked(square.id)}
-                        currentLetter={props.letters[square.id]}
-                        {...square}
-                    />
-                    );
-                }
-                return squares;
-            }
-        
-        
-            return (
-        <div style={{padding : "10px"}}>
-                        <div style={{textAlign: "right", height: "35px", fontSize: "25px"}}>{props.selectedChallenge.question}</div>
-                        <div style={{ display: "flex", flex: "1", marginRight:0, marginLeft: "auto", flexDirection: (props.horizontalDirection === 'rtl') ? "row-reverse" : "row", width: getWidth() + "px", height: "60px" }}>
-                            {/* {props.challengeSquares.map(square =>
-                    <Square
-                        selected={isSelected(square.id)}
-                        isSolved={isSolved(square.id)}
-                        challengeSelected={true}
-                        squareClicked={() => squareClicked(square.id)}
-                        currentLetter={props.letters[square.id]}
-                        {...square}
-                    />
-                )} */}
-                            {renderSquares()}
+                    key={i}
+                    selected={isSelected(square.id)}
+                    isSolved={isSolved(square.id)}
+                    challengeSelected={true}
+                    squareClicked={() => squareClicked(square.id)}
+                    currentLetter={props.letters[square.id]}
+                    {...square}
+                />
+            );
+        }
+        return squares;
+    }
 
-                        </div>
-                    </div>
-                    );
-                }
-                
-                
-                export default ChallengeBar;
+
+    return (
+        <div style={{ padding: "10px" }}>
+            <div style={{ textAlign: "right", height: "35px", fontSize: "25px" }}>{props.selectedChallenge.question}</div>
+            <div style={{ display: "flex", flex: "1", marginRight: 0, marginLeft: "auto", flexDirection: (props.horizontalDirection === 'rtl') ? "row-reverse" : "row", width: getWidth() + "px", height: "60px" }}>
+                {renderSquares()}
+            </div>
+        </div>
+    );
+}
+
+
+export default ChallengeBar;
