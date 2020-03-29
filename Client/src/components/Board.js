@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
+import AppContext from '../helpers/AppContext';
+import Panzoom from '@panzoom/panzoom';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import './App.css';
 import Square from './Square';
 
 function Board(props) {
+    const appContext = useContext(AppContext);
+
     const squareClicked = (id) => {
         props.squareClicked(id);
     };
@@ -41,38 +45,61 @@ function Board(props) {
                     />)
             }
             board.push(
-                <div key={y} style={{ display: "flex", flex: "1", flexDirection: "row", maxHeight:"60px" }}>{row}</div>
+                <div key={y} style={{ display: "flex", flex: "1", flexDirection: "row", maxHeight: "60px" }}>{row}</div>
             );
         }
 
         return board;
     }
 
+    useEffect(() => {
+        if (appContext.isMobileDevice) {
+            const element = document.getElementById('boardDiv')
+            const panzoom = Panzoom(element, {
+                maxScale: 1.5,
+                contain: "outside"
+            })
+        }
+    }, []);
+
 
 
     return (
-        <TransformWrapper
-            defaultScale={1}
-            defaultPositionX={100}
-            defaultPositionY={200}
-            pan={{ paddingSize: 0 }}
-            doubleClick={{disabled: true}}
-        >
-            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-                <React.Fragment>
-                    <div className="tools">
-                        <button onClick={zoomIn}>+</button>
-                        <button onClick={zoomOut}>-</button>
-                        <button onClick={resetTransform}>x</button>
+        <React.Fragment>
+            {!appContext.isMobileDevice &&
+                <TransformWrapper
+                    defaultScale={1}
+                    defaultPositionX={100}
+                    defaultPositionY={200}
+                    pan={{ paddingSize: 0 }}
+                    doubleClick={{ disabled: true }}
+                >
+                    {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                        <React.Fragment>
+                            <div className="tools">
+                                <button onClick={zoomIn}>+</button>
+                                <button onClick={zoomOut}>-</button>
+                                <button onClick={resetTransform}>x</button>
+                            </div>
+                            <TransformComponent>
+                                <div className="App" style={{ display: "flex", flexDirection: "column", width: props.width * props.squareSize + "px", height: props.height * props.squareSize + "px" }}>
+                                    {renderBoard()}
+                                </div>
+                            </TransformComponent>
+                        </React.Fragment>
+                    )}
+                </TransformWrapper>
+            }
+            {appContext.isMobileDevice &&
+
+                /* <div className="App" style={{ width: "1000px", height: "1000px" }}> */
+                < div id="boardContainer" className="App" style={{ overflow: "hidden", width: "100%", height: "250px" }}>
+                    <div id="boardDiv" className="App" style={{ display: "flex", flexDirection: "column", width: props.width * props.squareSize + "px", height: props.height * props.squareSize + "px" }}>
+                        {renderBoard()}
                     </div>
-                    <TransformComponent>
-                        <div className="App" style={{ display: "flex", flexDirection: "column", width: props.width * props.squareSize + "px", height: props.height * props.squareSize + "px" }}>
-                            {renderBoard()}
-                        </div>
-                    </TransformComponent>
-                </React.Fragment>
-            )}
-        </TransformWrapper>
+                </div>
+            }
+        </React.Fragment >
     );
 }
 

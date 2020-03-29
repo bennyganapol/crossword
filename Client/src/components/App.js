@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import './App.css';
+import AppContext from '../helpers/AppContext';
 import Board from './Board';
 import ChallengeBar from './ChallengeBar';
 import { socket, socketManager } from '../helpers/SocketManager';
 import { getChallenges, getSquares, getChallengeSquares, getSquare, getNextSquare, mapLetter } from '../helpers/initialiser'
+// import Keyboard from "react-simple-keyboard";
+// import "react-simple-keyboard/build/css/index.css";
 
 function App() {
   const board = { width: 13, height: 13, type: '2', horizontalDirection: 'rtl' };
 
+  const appContext = useContext(AppContext);
+  
+  
   const [challenges, setChallenges] = useState();
   const [squares, setSquares] = useState();
   const [selectedSquareId, setSelectedSquareId] = useState();
@@ -18,6 +24,16 @@ function App() {
   const [selectDirection, setSelectDirection] = useState();
   const [letters, setLetters] = useState([]);
   const [otherPlayersLetters, setOtherPlayersLetters] = useState([]);
+  
+  
+  const hiddenKeyboardRef = useRef(null);
+  const [hiddenKeyboard, setHiddenKeyboard] = useState("a");
+
+  // "react-simple-keyboard
+  // const [input, setInput] = useState("");
+  // const [layout, setLayout] = useState("default");
+  // const keyboard = useRef();
+
 
   const squareSelected = (newSelectedId) => {
     const previousSelectedSquareId = selectedSquareId;
@@ -58,6 +74,9 @@ function App() {
       if (newSelectedSquare.isQuestionSquare === true) {
         setSelectedSquareId(challengeSquares[0].id);
       }
+      if (appContext.isMobileDevice) {
+        hiddenKeyboardRef.current.focus();
+      }
     }
     else {
       setSelectedSquares();
@@ -65,7 +84,8 @@ function App() {
   };
 
   const keyPressedHandler = (e) => {
-    let letter = mapLetter(String.fromCharCode(e.which));
+    const char = (e.letter) ? e.letter : String.fromCharCode(e.which);
+    let letter = mapLetter(char);
     if (selectedSquareId != null) {
       const selectedSquare = squares[selectedSquareId];
       if (selectedSquare && selectedSquare.answerLetter && !solvedIds.includes(selectedSquareId)) {
@@ -234,11 +254,97 @@ function App() {
     getChallengesData();
   }, []);
 
+  const hiddenKeyboardOnChange = (e) => {
+    if (e.target.value && e.target.value.length === 2) {
+      const a = { letter: e.target.value[1] };
+      keyPressedHandler(a);
+    }
+    else if (e.target.value.length === 0) {
+      const b = { key: "Backspace" };
+      keyDownHandler(b)
+    }
+    setHiddenKeyboard("a");
+  }
+
+  // "react-simple-keyboard
+  // ******************   */
+
+
+  // const onChange = input => {
+  //   setInput(input);
+  //   console.log("Input changed", input);
+  // };
+
+  // const handleShift = () => {
+  //   const newLayoutName = layout === "default" ? "shift" : "default";
+  //   setLayout(newLayoutName);
+  // };
+
+  // const onKeyPress = button => {
+  //   console.log("Button pressed", button);
+
+  //   const char = 'כ';
+  //   // const a = { letter: 'd' };
+  //   // keyPressedHandler(a);
+  //   let letter = mapLetter(char);
+  //   if (selectedSquareId != null) {
+  //     const selectedSquare = squares[selectedSquareId];
+  //     if (selectedSquare && selectedSquare.answerLetter && !solvedIds.includes(selectedSquareId)) {
+  //       const newLetters = letters.slice();
+  //       newLetters[selectedSquareId] = letter;
+  //       setLetters(newLetters);
+  //       checkAnswer(selectedSquare, newLetters)
+  //       socketManager.challengeTyping(selectedSquareId, letter);
+  //     }
+
+  //     const nextSquareId = getNextSquare(squares, selectedSquareId, selectDirection);
+  //     setSelectedSquareId(nextSquareId);
+  //   }
+
+  //   /**
+  //    * If you want to handle the shift and caps lock buttons
+  //    */
+  //   // if (button === "{shift}" || button === "{lock}") handleShift();
+  // };
+
+  // const onChangeInput = event => {
+  //   const input = event.target.value;
+  //   setInput(input);
+  //   keyboard.current.setInput(input);
+  // };
+
+  // const lay = {
+  //   default: [
+  //     "ק ר א ט ו ן ם פ",
+  //     "ש ד ג כ ע י ח ל ך ף",
+  //     "ז ס ב ה נ מ צ ת",
+  //     "{space} {bksp}"
+  //   ],
+  //   default2: [
+  //     "` 1 2 3 4 5 6 7 8 9 0 - = {bksp}",
+  //     "{tab} q w e r t y u i o p [ ] \\",
+  //     "{lock} a s d f g h j k l ; ' {enter}",
+  //     "{shift} z x c v b n m , . / {shift}",
+  //     ".com @ {space}"
+  //   ],
+  //   shift: [
+  //     "~ ! @ # $ % ^ & * ( ) _ + {bksp}",
+  //     "{tab} Q W E R T Y U I O P { } |",
+  //     '{lock} A S D F G H J K L : " {enter}',
+  //     "{shift} Z X C V B N M < > ? {shift}",
+  //     ".com @ {space}"
+  //   ]
+  // };
+
   return (
     <React.Fragment>
       {!challenges && <div>Loading...</div>}
       {challenges && squares &&
-        <div>
+        <React.Fragment>
+
+          <div style={{ position: "fixed", width: "1px", height: "1px" }}>
+            <input style={{ position: "fixed", width: "1px", height: "1px" }} ref={hiddenKeyboardRef} type="text" value={hiddenKeyboard} onChange={hiddenKeyboardOnChange} ></input>
+          </div>
           <span>{solvedChallengesIds.length}\{challenges.length}</span>
           {(solvedChallengesIds.length === challenges.length) && <span> Game won !</span>}
           <ChallengeBar
@@ -264,7 +370,21 @@ function App() {
             horizontalDirection={board.horizontalDirection}
             squareClicked={(id) => squareSelected(id, "clicked")}
           />
-        </div>
+          {/* <div>
+            <input
+              value={input}
+              placeholder={"Tap on the virtual keyboard to start"}
+              onChange={onChangeInput}
+            />
+            <Keyboard
+              keyboardRef={r => (keyboard.current = r)}
+              layoutName={layout}
+              layout={lay}
+              onChange={onChange}
+              onKeyPress={onKeyPress}
+            />
+          </div> */}
+        </React.Fragment>
       }
     </React.Fragment>
   );
