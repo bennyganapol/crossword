@@ -13,26 +13,6 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-div .react-transform-component {
-  max-width: 780;
-  max-height: 780px;
-  height: 780px;
-}
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -40,4 +20,50 @@ div .react-transform-component {
   to {
     transform: rotate(360deg);
   }
+}
+
+.App {
+  text-align: center;
+}
+
+.mobile-app {
+  background-color: white;
+}
+
+.desktop-app {
+  background-color: white;
+}
+
+.hidden-keyboard-div {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  z-index: -10;
+}
+
+.hidden-keyboard-input {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+}
+
+.desktop-app .challenge-bar {
+  padding: 10px
+}
+
+.mobile-app .challenge-bar {
+  padding: 5px
+}
+
+.challenge-bar-question {
+  text-align: right;
+  height: 35px;
+  font-size: 25px;
+}
+
+.challenge-bar-answer {
+  display: flex;
+  flex: 1;
+  margin-right: 0;
+  margin-left: auto;
 }

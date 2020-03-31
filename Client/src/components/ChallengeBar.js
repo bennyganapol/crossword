@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AppContext from '../helpers/AppContext';
 import Square from './Square';
 
 
 function ChallengeBar(props) {
+
+    const appContext = useContext(AppContext);
 
     const squareClicked = (id) => {
         props.squareClicked(id);
@@ -16,10 +19,13 @@ function ChallengeBar(props) {
         return (props.solvedIds.includes(id));
     }
 
+    const challengeBarSquareSize = appContext.isMobileDevice ? 40 : 60;
+
     const getWidth = () => {
-        let lettersWidth = props.challengeSquares.length * 60;
+        let lettersWidth = props.challengeSquares.length * challengeBarSquareSize;
         if (props.selectedChallenge.multi && props.selectedChallenge.multi.length >= 2) {
-            lettersWidth += (props.selectedChallenge.multi.length - 1) * 30;
+            const spaceBetweenWords =  challengeBarSquareSize / 4;
+            lettersWidth += (props.selectedChallenge.multi.length - 1) * spaceBetweenWords;
         }
         return lettersWidth;
     }
@@ -59,9 +65,9 @@ function ChallengeBar(props) {
 
 
     return (
-        <div style={{ padding: "10px" }}>
-            <div style={{ textAlign: "right", height: "35px", fontSize: "25px" }}>{props.selectedChallenge.question}</div>
-            <div style={{ display: "flex", flex: "1", marginRight: 0, marginLeft: "auto", flexDirection: (props.horizontalDirection === 'rtl') ? "row-reverse" : "row", width: getWidth() + "px", height: "60px" }}>
+        <div className="challenge-bar">
+            <div className="challenge-bar-question">{props.selectedChallenge.question}</div>
+            <div className="challenge-bar-answer" style={{ flexDirection: (props.horizontalDirection === 'rtl') ? "row-reverse" : "row", width: getWidth() + "px", height: challengeBarSquareSize + "px" }}>
                 {renderSquares()}
             </div>
         </div>

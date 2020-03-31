@@ -12,8 +12,7 @@ function App() {
   const board = { width: 13, height: 13, type: '2', horizontalDirection: 'rtl' };
 
   const appContext = useContext(AppContext);
-  
-  
+
   const [challenges, setChallenges] = useState();
   const [squares, setSquares] = useState();
   const [selectedSquareId, setSelectedSquareId] = useState();
@@ -24,8 +23,8 @@ function App() {
   const [selectDirection, setSelectDirection] = useState();
   const [letters, setLetters] = useState([]);
   const [otherPlayersLetters, setOtherPlayersLetters] = useState([]);
-  
-  
+
+
   const hiddenKeyboardRef = useRef(null);
   const [hiddenKeyboard, setHiddenKeyboard] = useState("a");
 
@@ -34,6 +33,20 @@ function App() {
   // const [layout, setLayout] = useState("default");
   // const keyboard = useRef();
 
+  const toggleFullScreen = () => {
+    var doc = window.document;
+    var docEl = doc.documentElement;
+
+    var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+    var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+
+    if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+      requestFullScreen.call(docEl);
+    }
+    else {
+      cancelFullScreen.call(doc);
+    }
+  }
 
   const squareSelected = (newSelectedId) => {
     const previousSelectedSquareId = selectedSquareId;
@@ -337,16 +350,15 @@ function App() {
   // };
 
   return (
-    <React.Fragment>
+    <div className={appContext.isMobileDevice ? "mobile-app" : "desktop-app"}>
       {!challenges && <div>Loading...</div>}
       {challenges && squares &&
         <React.Fragment>
-
-          <div style={{ position: "fixed", width: "1px", height: "1px" }}>
-            <input style={{ position: "fixed", width: "1px", height: "1px" }} ref={hiddenKeyboardRef} type="text" value={hiddenKeyboard} onChange={hiddenKeyboardOnChange} ></input>
+          <div className="hidden-keyboard-div">
+            <input className="hidden-keyboard-input" ref={hiddenKeyboardRef} type="text" value={hiddenKeyboard} onChange={hiddenKeyboardOnChange} ></input>
           </div>
-          <span>{solvedChallengesIds.length}\{challenges.length}</span>
-          {(solvedChallengesIds.length === challenges.length) && <span> Game won !</span>}
+          {/* <span>{solvedChallengesIds.length}\{challenges.length}</span>
+          {(solvedChallengesIds.length === challenges.length) && <span> Game won !</span>} */}
           <ChallengeBar
             selectedChallenge={challenges[selectedChallengeId]}
             challengeSquares={getChallengeSquares(squares, challenges[selectedChallengeId])}
@@ -386,7 +398,7 @@ function App() {
           </div> */}
         </React.Fragment>
       }
-    </React.Fragment>
+    </div>
   );
 }
 
