@@ -64,6 +64,11 @@ function Board(props) {
                 contain: "outside",
             });
 
+            element.addEventListener('panzoomend', (event) => {
+                props.hiddenKeyboardRef.current.blur();
+                
+              })
+
             panzoomRef.current = panzoom;
             return () => {
                 panzoomRef.current.destroy();
@@ -81,6 +86,7 @@ function Board(props) {
             const {x , y } = props.squares[props.selectedSquareId];
             const scale = panzoom.getScale();
             panzoom.pan(-((x + 0.5) * 60) + (210), -((y + 0.5) * 60) + 60 * scale);
+            
         }
 
     }, [props.selectedSquareId]);
@@ -117,7 +123,7 @@ function Board(props) {
 
                 /* <div className="App" style={{ width: "1000px", height: "1000px" }}> */
                 < div id="boardContainer" className="App" style={{ overflow: "hidden", width: "100%", height: "0", display: "inline-block", paddingBottom: "100%" }}>
-                    <div id="boardDiv" className="App" style={{ display: "flex", flexDirection: "column", width: props.width * props.squareSize + "px", height: props.height * props.squareSize + "px" }}>
+                    <div id="boardDiv" className="board-div" style={{ width: props.width * props.squareSize + "px", height: props.height * props.squareSize + "px" }}>
                         {renderBoard()}
                     </div>
                 </div>

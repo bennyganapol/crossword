@@ -67,3 +67,9 @@
   margin-right: 0;
   margin-left: auto;
 }
+
+.board-div {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 280px;
+}

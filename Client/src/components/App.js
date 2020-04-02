@@ -381,6 +381,7 @@ function App() {
             squareSize={60}
             horizontalDirection={board.horizontalDirection}
             squareClicked={(id) => squareSelected(id, "clicked")}
+            hiddenKeyboardRef={hiddenKeyboardRef}
           />
           {/* <div>
             <input
