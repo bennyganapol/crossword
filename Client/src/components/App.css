@@ -22,6 +22,10 @@
   }
 }
 
+:root {
+  --board-padding-bottom: 200px;
+}
+
 .App {
   text-align: center;
 }
@@ -71,5 +75,5 @@
 .board-div {
   display: flex;
   flex-direction: column;
-  padding-bottom: 280px;
+  padding-bottom: var(--board-padding-bottom);  
 }
