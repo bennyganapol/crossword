@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
+import Game from './components/Game';
 import AppContext, { InitialAppContext } from './helpers/AppContext';
 import * as serviceWorker from './serviceWorker';
 

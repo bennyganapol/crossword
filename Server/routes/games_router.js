@@ -5,8 +5,12 @@ export const gamesRouter = express.Router();
 
 gamesRouter.post('/', async (req, res) => {
   try {
-    const challenges =
-      [
+    const boardData = {
+      type: '2',
+      horizontalDirection: 'rtl',
+      width: 13,
+      height: 13,
+      challenges: [
         { question: "מבנייני הפועל בדקדוק ", answer: "קל", x: 3, y: 8, questionX: 3, questionY: 7, direction: 'down' },
         { question: "חודש", answer: "ירח", x: 8, y: 6, questionX: 8, questionY: 5, direction: 'down' },
         { question: "זוג עצמות בפנים", answer: "לסת", x: 1, y: 6, questionX: 1, questionY: 5, direction: 'down' },
@@ -67,9 +71,10 @@ gamesRouter.post('/', async (req, res) => {
 
         { questionType: "image", answer: "ירדןהראל", x: 6, y: 4, questionX: 5, questionY: 4, imageX: 5, imageY: 4, direction: 'down', imageId: '1' },
         { questionType: "image", answer: "הראלמויאל", x: 9, y: 2, questionX: 10, questionY: 2, imageX: 12, imageY: 0, direction: 'left', imageId: '2' },
-      ];
+      ]
+    };
     const response = {
-      challenges: challenges
+      boardData: boardData
     };
     res.json(response);
   }

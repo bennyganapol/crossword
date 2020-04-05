@@ -1,15 +1,16 @@
  import axios from 'axios';
 import { Img1, Img2 } from '../Images/img1'
 
-export const getChallenges = async () => {
+export const getBoardData = async () => {
     let res = await axios.post(`${window.location.protocol}//${window.location.hostname}:4000/games`);
     console.log(res.data.challenges);
-    let { challenges } = res.data;
+    let { boardData } = res.data;
+    let { challenges } = boardData;
     
     for (let i = 0; i < challenges.length; i++) {
         challenges[i].id = i;
     }
-    return challenges;
+    return boardData;
 }
 
 export const mapLetter = (letter) => {
