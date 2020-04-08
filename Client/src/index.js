@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './components/App';
 import Game from './components/Game';
@@ -8,7 +9,9 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
     <AppContext.Provider value={InitialAppContext}>
-        <App />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </AppContext.Provider>
     , document.getElementById('root'));
 

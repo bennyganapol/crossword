@@ -12,6 +12,7 @@ function Game(props) {
   const appContext = useContext(AppContext);
 
   // const [challenges, setChallenges] = useState();
+  const [boardData, setBoardData] = useState();
   const [squares, setSquares] = useState();
   const [selectedSquareId, setSelectedSquareId] = useState();
   const [selectedSquares, setSelectedSquares] = useState([]);
@@ -157,7 +158,7 @@ function Game(props) {
     }
     else if (key === "ArrowRight") {
       const selectedSquare = squares[selectedSquareId];
-      const newSquare = getSquare(squares, Math.min(selectedSquare.x + 1, props.boardWidth - 1), selectedSquare.y);
+      const newSquare = getSquare(squares, Math.min(selectedSquare.x + 1, boardData.width - 1), selectedSquare.y);
       // setSelectedSquareId();
       squareSelected(newSquare.id);
     }
@@ -173,7 +174,7 @@ function Game(props) {
     }
     else if (key === "ArrowDown") {
       const selectedSquare = squares[selectedSquareId];
-      const newSquare = getSquare(squares, selectedSquare.x, Math.min(selectedSquare.y + 1, props.boardHeight - 1));
+      const newSquare = getSquare(squares, selectedSquare.x, Math.min(selectedSquare.y + 1, boardData.height - 1));
       squareSelected(newSquare.id);
     }
   }
@@ -215,7 +216,7 @@ function Game(props) {
     const newSolvedIds = solvedIds.slice();
     const newSolvedChallengesIds = solvedChallengesIds.slice();
 
-    const challenge = props.challenges[challengeId];
+    const challenge = boardData.challenges[challengeId];
     const challengeSquares = getChallengeSquares(squares, challenge);
 
     for (let i = 0; i < challengeSquares.length; i++) {
@@ -241,6 +242,16 @@ function Game(props) {
     setOtherPlayersLetters(newLetters)
   }
 
+  const initBoardData = async () => {
+    const newBoardData = await getBoardData();
+    setBoardData(newBoardData);
+    setSquares(getSquares(newBoardData.challenges, newBoardData.width, newBoardData.height));
+  }
+
+  useEffect(() => {
+    initBoardData();
+  }, []);
+
   useEffect(() => {
     document.addEventListener("keypress", keyPressedHandler, false);
     document.addEventListener("keydown", keyDownHandler, false);
@@ -254,10 +265,6 @@ function Game(props) {
       socket.off("challengeTyping");
     };
   });
-
-  useEffect(() => {
-    setSquares(getSquares(props.challenges, props.boardWidth, props.boardHeight));
-  }, []);
 
   const hiddenKeyboardOnChange = (e) => {
     if (e.target.value && e.target.value.length === 2) {
@@ -343,8 +350,8 @@ function Game(props) {
 
   return (
     <div className={appContext.isMobileDevice ? "mobile-app" : "desktop-app"}>
-      {!props.challenges && <div>Loading...</div>}
-      {props.challenges && squares &&
+      {!boardData && <div>Loading...</div>}
+      {boardData && squares &&
         <React.Fragment>
           <div className="hidden-keyboard-div">
             <input className="hidden-keyboard-input" ref={hiddenKeyboardRef} type="text" value={hiddenKeyboard} onChange={hiddenKeyboardOnChange} ></input>
@@ -352,13 +359,13 @@ function Game(props) {
           {/* <span>{solvedChallengesIds.length}\{challenges.length}</span>
           {(solvedChallengesIds.length === challenges.length) && <span> Game won !</span>} */}
           <ChallengeBar
-            selectedChallenge={props.challenges[selectedChallengeId]}
-            challengeSquares={getChallengeSquares(squares, props.challenges[selectedChallengeId])}
+            selectedChallenge={boardData.challenges[selectedChallengeId]}
+            challengeSquares={getChallengeSquares(squares, boardData.challenges[selectedChallengeId])}
             selectedSquareId={selectedSquareId}
             solvedIds={solvedIds}
             letters={letters}
             otherPlayersLetters={otherPlayersLetters}
-            horizontalDirection={props.horizontalDirection}
+            horizontalDirection={boardData.horizontalDirection}
             squareClicked={(id) => squareSelected(id, "clicked")}
           />
           <Board
@@ -368,10 +375,10 @@ function Game(props) {
             squares={squares}
             letters={letters}
             otherPlayersLetters={otherPlayersLetters}
-            width={props.boardWidth}
-            height={props.boardHeight}
+            width={boardData.width}
+            height={boardData.height}
             squareSize={60}
-            horizontalDirection={props.horizontalDirection}
+            horizontalDirection={boardData.horizontalDirection}
             squareClicked={(id) => squareSelected(id, "clicked")}
             hiddenKeyboardRef={hiddenKeyboardRef}
           />
