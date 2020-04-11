@@ -52,7 +52,10 @@ function Square(props) {
 
     const getLetter = () => {
         let letterSpan = null;
-        if (props.currentLetter) {
+        if (props.editMode === true) {
+            letterSpan = <span style={{fontWeight: "bold", color: "rgba(0, 0, 0, 0.2)"}}>{props.answerLetter}</span> ;
+        }
+        else if (props.currentLetter) {
             letterSpan = <span style={{fontWeight: "bold"}}>{props.currentLetter}</span> ;
         } else if (props.otherPlayersLetter && !props.challengeSelected && !props.selected){
             letterSpan = <span style={{fontWeight: "bold", color: "rgba(0, 0, 0, 0.2)"}}>{props.otherPlayersLetter}</span> ;

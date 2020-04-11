@@ -6,8 +6,10 @@ function SelectGame() {
     return (
         <>
             <div>Select game:</div>
+            <br />
 
-            <Link to="/Game">Arrow Word 1</Link>
+            <div><Link to="/Game">Arrow Word 1</Link></div>
+            <div><Link to="/EditBoard">Edit your own board</Link></div>
         </>
     );
 }

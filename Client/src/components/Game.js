@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import './App.css';
 import AppContext from '../helpers/AppContext';
 import Board from './Board';
 import ChallengeBar from './ChallengeBar';
@@ -379,7 +378,7 @@ function Game(props) {
             height={boardData.height}
             squareSize={60}
             horizontalDirection={boardData.horizontalDirection}
-            squareClicked={(id) => squareSelected(id, "clicked")}
+            squareClicked={(id) => squareSelected(id)}
             hiddenKeyboardRef={hiddenKeyboardRef}
           />
           {/* <div>

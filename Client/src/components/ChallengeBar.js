@@ -56,6 +56,7 @@ function ChallengeBar(props) {
                     challengeSelected={true}
                     squareClicked={() => squareClicked(square.id)}
                     currentLetter={props.letters[square.id]}
+                    editMode={props.editMode}
                     {...square}
                 />
             );

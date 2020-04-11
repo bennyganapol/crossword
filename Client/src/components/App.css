@@ -75,5 +75,89 @@
 .board-div {
   display: flex;
   flex-direction: column;
-  padding-bottom: var(--board-padding-bottom);  
+  padding-bottom: var(--board-padding-bottom);
+}
+
+/*  ------ Edit Board   ------ */
+
+.edit-board {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.edit-board-preview {
+  display: flex;
+  flex: 0 0 50%;
+  flex-direction: column;
+}
+
+.edit-area {
+  display: flex;
+  flex: 0 0 50%;
+  flex-direction: column;
+  background-color: lightgrey;
+  padding: 20px;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.edit-area-title-1 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.edit-area-title-2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.edit-board .react-transform-component {
+  width: 45vw;
+  height: 45vw;
+  /* max-height: 0px; */
+  /* padding-bottom: 300px; */
+}
+
+.edit-board .board {
+  width: 45vw;
+  max-height: 0px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.edit-area-challenges {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.edit-area-challenge {
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 5px;
+  cursor: pointer;
+  border: 1px black solid;
+}
+
+.edit-challenge-question {
+  flex: 4;
+  padding: 4px;
+}
+
+.edit-challenge-answer {
+  flex: 3;
+  padding: 4px;
+}
+
+.edit-challenge-location {
+  flex: 1;
+  padding: 4px;
 }

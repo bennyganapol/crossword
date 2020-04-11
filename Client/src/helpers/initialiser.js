@@ -8,7 +8,9 @@ export const getBoardData = async () => {
     let { challenges } = boardData;
     
     for (let i = 0; i < challenges.length; i++) {
-        challenges[i].id = i;
+        if (!challenges[i].id) {
+            challenges[i].id = i;
+        }
     }
     return boardData;
 }
