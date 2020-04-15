@@ -18,7 +18,17 @@ Collaboration:
 (V) Broadcast also a deletion of a letter
 (V)) Dont show other players letters in squares of selected challenge
 
-
+Edit mode:
+(V) - Challenge edit buttons: done, cancel, delete ((V)Delete confirm, (V)buttons colors, (V)imidiate change to preview)
+(V) Edit challenge direction: down\aside.
+- Start clean board\delete all challenges button.
+- Add new challenge button
+- Location: can be selected by clicking on board.
+- Export\save\load created JSON.
+- Edit\Fix multi work challenges.
+- Right click on square to add new challenge
+- Protect from errors, warn for incorrect challenges combinations.
+- Focus challange on edit area when clicking on a square
 
 
 General:

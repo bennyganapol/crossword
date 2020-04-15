@@ -21,6 +21,11 @@ module.exports = {
   plugins: [
     'react',
   ],
-  rules: {
+  "rules": {
+    "semi": 0,
+    'max-len': ["error", { "code": 140 }],
+    'jsx-a11y/click-events-have-key-events': 0,
+    'react/prop-types': 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
   },
 };

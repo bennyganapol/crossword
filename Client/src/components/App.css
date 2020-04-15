@@ -133,7 +133,10 @@
   text-align: right;
   display: flex;
   flex-direction: column;
-  
+}
+
+.edit-area-challenges input {
+  text-align: right;
 }
 
 .edit-area-challenge {
@@ -148,16 +151,27 @@
 }
 
 .edit-challenge-question {
-  flex: 4;
+  flex: 8;
   padding: 4px;
 }
 
 .edit-challenge-answer {
-  flex: 3;
+  flex: 6;
   padding: 4px;
 }
 
 .edit-challenge-location {
-  flex: 1;
+  flex: 2;
   padding: 4px;
+}
+
+.edit-challenge-location input{
+  display: inline-block;
+  width: 35px;
+}
+
+.edit-challenge-location button{
+  margin-top: 2px;
+  margin-bottom: 2px;
+  width: 100px;
 }

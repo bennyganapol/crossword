@@ -109,6 +109,7 @@ function Square(props) {
     return (
         <div
             onClick={props.squareClicked}
+            title={props.editMode? `x:${props.x} y: ${props.y}` : ""}
 
             style={Object.assign(
                 { border: "1px solid gray", display: "flex", alignItems: "center", justifyContent: "center", flex: "1", position: "relative" },

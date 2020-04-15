@@ -40,7 +40,7 @@ function Board(props) {
             challengeSelected={isChallengeSelected(id)}
             squareClicked={() => squareClicked(id)}
             currentLetter={props.letters[id]}
-            otherPlayersLetter={props.otherPlayersLetters[id]}
+            otherPlayersLetter={props.otherPlayersLetters? props.otherPlayersLetters[id] : null}
             horizontalDirection={props.horizontalDirection}
             editMode={props.editMode}
             {...props.squares[id]}
