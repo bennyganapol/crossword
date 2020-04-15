@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Form, Button, Container, Row, Col,
+  Form, Button, Container, Row, Col, Modal,
 } from 'react-bootstrap';
 import EditChallenge from './EditChallenge'
 
@@ -10,7 +10,7 @@ function EditArea(props) {
     width: boardData.width,
     height: boardData.height,
   });
-  // const [challenges, setChallenges] = useState(boardData.challenges);
+  const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
 
   const getCurrentBoardData = () => {
     const currentBoardData = props.boardData;
@@ -49,7 +49,6 @@ function EditArea(props) {
   const onChallengeDoneEdit = (challenge) => {
     const newChallenges = boardData.challenges.slice();
     newChallenges[challenge.id] = challenge;
-    // setChallenges(newChallenges);
     if (props.onChallengesChanged) {
       props.onChallengesChanged(newChallenges);
     }
@@ -58,17 +57,17 @@ function EditArea(props) {
   const onDeleteClicked = (challenge) => {
     const newChallenges = boardData.challenges.slice();
     delete newChallenges[challenge.id];
-    // setChallenges(newChallenges);
     if (props.onChallengesChanged) {
       props.onChallengesChanged(newChallenges);
     }
   }
 
-  // const onEditChallengeClicked = (e) => {
-  //   e.stopPropagation();
-  //   // eslint-disable-next-line no-alert
-  //   alert('editTest');
-  // }
+  const deleteAllChallengesApproved = () => {
+    setShowDeleteAllModal(false)
+    if (props.onChallengesChanged) {
+      props.onChallengesChanged([]);
+    }
+  }
 
   return (
     <>
@@ -108,8 +107,9 @@ function EditArea(props) {
 
 
           <div className="edit-area-title-2">Challenges</div>
-
-
+          <div>
+            <Button variant="primary" onClick={() => setShowDeleteAllModal(true)} size="sm">Delete all challenges</Button>
+          </div>
           <div className="edit-area-challenges">
             {
               boardData.challenges.map((challenge) => (
@@ -123,6 +123,20 @@ function EditArea(props) {
               ))
             }
           </div>
+          <Modal show={showDeleteAllModal} onHide={() => setShowDeleteAllModal(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Delete all challenges</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Are you sure you want to delete all challenges?</Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowDeleteAllModal(false)}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={deleteAllChallengesApproved}>
+                Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </>
       )}
     </>

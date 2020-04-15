@@ -21,7 +21,7 @@ Collaboration:
 Edit mode:
 (V) - Challenge edit buttons: done, cancel, delete ((V)Delete confirm, (V)buttons colors, (V)imidiate change to preview)
 (V) Edit challenge direction: down\aside.
-- Start clean board\delete all challenges button.
+(V) Start clean board\delete all challenges button.
 - Add new challenge button
 - Location: can be selected by clicking on board.
 - Export\save\load created JSON.
