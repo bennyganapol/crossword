@@ -47,6 +47,9 @@ function EditBoard() {
       setSelectedSquares(challengeSquares);
       setSelectDirection(newChallenge.direction);
       setSelectedChallengeId(newChallenge.id);
+      const challengeElement = document.getElementById(`editchallenge${newChallenge.id}`);
+      challengeElement.focus();
+      challengeElement.blur();
       if (newSelectedSquare.isQuestionSquare === true) {
         setSelectedSquareId(challengeSquares[0].id);
       }
@@ -69,11 +72,21 @@ function EditBoard() {
   const onChallengeClicked = (id) => {
     const challenge = boardData.challenges[id];
     const challengeSquare = getSquare(squares, challenge.questionX, challenge.questionY);
-    squareSelected(challengeSquare.id, challenge);
+    if (challengeSquare) {
+      squareSelected(challengeSquare.id, challenge);
+    }
   }
 
   const onChallengesChanged = (newChallenges) => {
-    const newBoardData = { ...boardData, challenges: newChallenges };
+    const newChallengesCopy = newChallenges.slice();
+
+    for (let i = 0; i < newChallengesCopy.length; i += 1) {
+      if (newChallengesCopy[i]) {
+        newChallengesCopy[i].id = i;
+      }
+    }
+
+    const newBoardData = { ...boardData, challenges: newChallengesCopy };
     refreshBoard(newBoardData);
   }
 
@@ -115,6 +128,7 @@ function EditBoard() {
           <div className="edit-area">
             <EditArea
               boardData={boardData}
+              selectedChallengeId={selectedChallengeId}
               refreshBoard={refreshBoard}
               onChallengeClicked={onChallengeClicked}
               onChallengesChanged={onChallengesChanged}

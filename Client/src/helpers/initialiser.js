@@ -182,7 +182,10 @@ export const getChallengeSquares = (squares, challenge) => {
             default:
                 break;
         }
-        returnSquares.push(getSquare(squares, x, y));
+        const newSquare = getSquare(squares, x, y);
+        if (newSquare) {
+            returnSquares.push(newSquare);
+        }
     }
     return returnSquares;
 }

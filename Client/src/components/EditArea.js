@@ -62,12 +62,28 @@ function EditArea(props) {
     }
   }
 
+  const addNewChallengeOnClick = () => {
+    const newChallenge = {
+      question: '',
+      answer: '',
+      direction: 'down',
+    };
+    const newChallenges = boardData.challenges.slice();
+    newChallenges.unshift(newChallenge);
+
+    if (props.onChallengesChanged) {
+      props.onChallengesChanged(newChallenges);
+    }
+  }
+
   const deleteAllChallengesApproved = () => {
     setShowDeleteAllModal(false)
     if (props.onChallengesChanged) {
       props.onChallengesChanged([]);
     }
   }
+
+  const isChallengSelected = (challengeId) => challengeId === props.selectedChallengeId
 
   return (
     <>
@@ -108,12 +124,16 @@ function EditArea(props) {
 
           <div className="edit-area-title-2">Challenges</div>
           <div>
-            <Button variant="primary" onClick={() => setShowDeleteAllModal(true)} size="sm">Delete all challenges</Button>
+            <Button variant="primary" onClick={addNewChallengeOnClick} size="sm">New</Button>
+            {' '}
+            <Button variant="primary" onClick={() => setShowDeleteAllModal(true)} size="sm">Delete all</Button>
           </div>
           <div className="edit-area-challenges">
             {
               boardData.challenges.map((challenge) => (
                 <EditChallenge
+                  key={challenge.id}
+                  isSelected={isChallengSelected(challenge.id)}
                   challenge={challenge}
                   onChallengeClicked={() => onChallengeClicked(challenge.id)}
                   onChallengeDoneEdit={onChallengeDoneEdit}

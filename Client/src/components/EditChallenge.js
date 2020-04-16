@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 
 function EditChallenge(props) {
-  const { challenge, horizontalDirection } = props;
+  const { challenge, horizontalDirection, isSelected } = props;
   const [editMode, setEditMode] = useState(false);
   const [newChallenge, setNewChallenge] = useState(challenge);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -51,6 +51,9 @@ function EditChallenge(props) {
     if (e.target.name === 'x' || e.target.name === 'y' || e.target.name === 'questionX' || e.target.name === 'questionY') {
       // eslint-disable-next-line radix
       newValue = parseInt(e.target.value);
+      if (!newValue) {
+        newValue = '';
+      }
     }
     setNewChallenge({ ...newChallenge, [e.target.name]: newValue });
   }
@@ -59,25 +62,33 @@ function EditChallenge(props) {
     setShowDeleteModal(false);
   }
 
+  useEffect(() => {
+    setNewChallenge(challenge);
+  }, [challenge]);
+
   return (
     <>
       {editMode !== true
         && (
-          <div className="edit-area-challenge" role="button" tabIndex={0} onClick={() => onChallengeClicked(challenge.id)}>
+          <div
+            id={`editchallenge${challenge.id}`}
+            className={`edit-area-challenge ${isSelected ? 'selected-challenge' : ''}`}
+            role="button"
+            tabIndex={0}
+            onClick={() => onChallengeClicked(challenge.id)}
+          >
             <div className="edit-challenge-location">
               <Button variant="primary" onClick={onEditClicked} size="sm">Edit</Button>
             </div>
             <div className="edit-challenge-question">{challenge.question}</div>
             <div className="edit-challenge-answer">{challenge.answer}</div>
             <div className="edit-challenge-location">{challenge.direction}</div>
-            {/* <div className="edit-challenge-location">{`x:${challenge.x} y:${challenge.y}`}</div>
-            <div className="edit-challenge-location">{`x:${challenge.questionX} y:${challenge.questionY}`}</div> */}
           </div>
         )}
       {editMode === true
         && (
           <Form>
-            <div className="edit-area-challenge editMode">
+            <div className={`edit-area-challenge editMode ${isSelected ? 'selected-challenge' : ''}`} id={`editchallenge${challenge.id}`}>
               <div className="edit-challenge-location">
                 <Button variant="primary" onClick={onDoneClicked} size="sm">Done</Button>
                 <Button variant="danger" onClick={onDeleteClicked} size="sm">Delete</Button>
@@ -104,10 +115,6 @@ function EditChallenge(props) {
                   <Form.Control id="questionY" name="questionY" onChange={handleChange} value={newChallenge.questionY} size="sm" />
                 </div>
               </div>
-              {/* <div className="edit-challenge-location">
-                <Form.Control id="editX" name="questionX" onChange={handleChange} value={newChallenge.questionX} size="sm" />
-                <Form.Control id="editY" name="questionY" onChange={handleChange} value={newChallenge.questionY} size="sm" />
-              </div> */}
             </div>
           </Form>
         )}

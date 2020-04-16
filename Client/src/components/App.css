@@ -135,6 +135,11 @@
   flex-direction: column;
 }
 
+.edit-area-challenges .selected-challenge {
+  
+  border: 1px solid yellow;
+}
+
 .edit-area-challenges input {
   text-align: right;
 }
