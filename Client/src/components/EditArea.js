@@ -139,6 +139,7 @@ function EditArea(props) {
                   onChallengeDoneEdit={onChallengeDoneEdit}
                   onDeleteClicked={onDeleteClicked}
                   horizontalDirection={boardData.horizontalDirection}
+                  boardLatestEvent={props.boardLatestEvent}
                 />
               ))
             }

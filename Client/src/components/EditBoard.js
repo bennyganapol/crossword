@@ -17,6 +17,7 @@ function EditBoard() {
   const [selectedChallengeId, setSelectedChallengeId] = useState(0);
   const [selectDirection, setSelectDirection] = useState();
   const emptyArray = [];
+  const [boardLatestEvent, setBoardLatestEvent] = useState();
 
   const squareSelected = (newSelectedId, challenge) => {
     const previousSelectedSquareId = selectedSquareId;
@@ -57,6 +58,17 @@ function EditBoard() {
       setSelectedSquares();
     }
   };
+
+  const squareRightClicked = (squareId) => {
+    const square = squares[squareId];
+    setBoardLatestEvent(
+      {
+        event: 'squareRightClicked',
+        x: square.x,
+        y: square.y,
+      },
+    );
+  }
 
   const initBoardData = async () => {
     const newBoardData = await getBoardData();
@@ -121,13 +133,15 @@ function EditBoard() {
               height={boardData.height}
               squareSize={60}
               horizontalDirection={boardData.horizontalDirection}
-              squareClicked={(id) => squareSelected(id)}
+              squareClicked={squareSelected}
+              squareRightClicked={squareRightClicked}
               editMode
             />
           </div>
           <div className="edit-area">
             <EditArea
               boardData={boardData}
+              boardLatestEvent={boardLatestEvent}
               selectedChallengeId={selectedChallengeId}
               refreshBoard={refreshBoard}
               onChallengeClicked={onChallengeClicked}

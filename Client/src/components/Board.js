@@ -13,6 +13,12 @@ function Board(props) {
     props.squareClicked(id);
   };
 
+  const squareRightClicked = (id) => {
+    if (props.squareRightClicked) {
+      props.squareRightClicked(id);
+    }
+  };
+
   const isSelected = (id) => {
     return (props.selectedSquareId === id);
   };
@@ -39,8 +45,9 @@ function Board(props) {
             isSolved={isSolved(id)}
             challengeSelected={isChallengeSelected(id)}
             squareClicked={() => squareClicked(id)}
+            squareRightClicked={() => squareRightClicked(id)}
             currentLetter={props.letters[id]}
-            otherPlayersLetter={props.otherPlayersLetters? props.otherPlayersLetters[id] : null}
+            otherPlayersLetter={props.otherPlayersLetters ? props.otherPlayersLetters[id] : null}
             horizontalDirection={props.horizontalDirection}
             editMode={props.editMode}
             {...props.squares[id]}

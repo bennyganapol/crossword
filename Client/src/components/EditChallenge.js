@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 
 function EditChallenge(props) {
-  const { challenge, horizontalDirection, isSelected } = props;
+  const {
+    challenge, horizontalDirection, isSelected, boardLatestEvent,
+  } = props;
   const [editMode, setEditMode] = useState(false);
   const [newChallenge, setNewChallenge] = useState(challenge);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isQuestionEditLatest, setIsQuestionEditLatest] = useState(true);
 
 
   const onChallengeClicked = (id) => {
@@ -62,9 +65,28 @@ function EditChallenge(props) {
     setShowDeleteModal(false);
   }
 
+  const handleQuestionClick = () => {
+    setIsQuestionEditLatest(true);
+  }
+
+  const handleAnswerClick = () => {
+    setIsQuestionEditLatest(false);
+  }
+
   useEffect(() => {
     setNewChallenge(challenge);
   }, [challenge]);
+
+  useEffect(() => {
+    if (boardLatestEvent && isSelected && editMode) {
+      if (isQuestionEditLatest) {
+        setNewChallenge({ ...newChallenge, questionX: boardLatestEvent.x, questionY: boardLatestEvent.y });
+      } else {
+        setNewChallenge({ ...newChallenge, x: boardLatestEvent.x, y: boardLatestEvent.y });
+      }
+    }
+  }, [boardLatestEvent]);
+
 
   return (
     <>
@@ -95,10 +117,10 @@ function EditChallenge(props) {
                 <Button variant="secondary" onClick={onCancelClicked} size="sm">Cancel</Button>
               </div>
               <div className="edit-challenge-question">
-                <Form.Control name="question" onChange={handleChange} value={newChallenge.question} size="sm" />
+                <Form.Control name="question" onChange={handleChange} onClick={handleQuestionClick} value={newChallenge.question} size="sm" />
               </div>
               <div className="edit-challenge-answer">
-                <Form.Control name="answer" onChange={handleChange} value={newChallenge.answer} size="sm" />
+                <Form.Control name="answer" onChange={handleChange} onClick={handleAnswerClick} value={newChallenge.answer} size="sm" />
               </div>
               <div className="edit-challenge-location">
                 <Form.Control as="select" name="direction" value={newChallenge.direction} onChange={handleChange} size="sm" custom>
@@ -107,12 +129,44 @@ function EditChallenge(props) {
                   {horizontalDirection === 'rtl' && <option value="left">Left</option>}
                 </Form.Control>
                 <div>
-                  <Form.Control id="editX" name="x" onChange={handleChange} value={newChallenge.x} size="sm" />
-                  <Form.Control id="editY" name="y" onChange={handleChange} value={newChallenge.y} size="sm" />
+                  <Form.Control
+                    id="editX"
+                    name="x"
+                    onChange={handleChange}
+                    onClick={handleAnswerClick}
+                    value={newChallenge.x}
+                    maxLength="2"
+                    size="sm"
+                  />
+                  <Form.Control
+                    id="editY"
+                    name="y"
+                    onChange={handleChange}
+                    onClick={handleAnswerClick}
+                    value={newChallenge.y}
+                    maxLength="2"
+                    size="sm"
+                  />
                 </div>
                 <div>
-                  <Form.Control id="questionX" name="questionX" onChange={handleChange} value={newChallenge.questionX} size="sm" />
-                  <Form.Control id="questionY" name="questionY" onChange={handleChange} value={newChallenge.questionY} size="sm" />
+                  <Form.Control
+                    id="questionX"
+                    name="questionX"
+                    onChange={handleChange}
+                    onClick={handleQuestionClick}
+                    value={newChallenge.questionX}
+                    maxLength="2"
+                    size="sm"
+                  />
+                  <Form.Control
+                    id="questionY"
+                    name="questionY"
+                    onChange={handleChange}
+                    onClick={handleQuestionClick}
+                    value={newChallenge.questionY}
+                    maxLength="2"
+                    size="sm"
+                  />
                 </div>
               </div>
             </div>

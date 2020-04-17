@@ -148,9 +148,18 @@ function Square(props) {
     return questionContent;
   }
 
+  const onContextMenuHandler = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (props.squareRightClicked) {
+      props.squareRightClicked();
+    }
+  }
+
   return (
     <div
       onClick={props.squareClicked}
+      onContextMenu={onContextMenuHandler}
       title={props.editMode ? `x:${props.x} y: ${props.y}` : ''}
       style={({
         border: '1px solid gray',
