@@ -69,16 +69,20 @@ function EditBoard() {
       },
     );
   }
-
-  const initBoardData = async () => {
-    const newBoardData = await getBoardData();
+  const refreshBoard = (newBoardData) => {
+    // for (let i = 0; i < newBoardData.challenges.length; i += 1) {
+    //   if (!newBoardData.challenges[i].id) {
+    //     newBoardData.challenges[i].id = i;
+    //   }
+    // }
     setBoardData(newBoardData);
     setSquares(getSquares(newBoardData.challenges, newBoardData.width, newBoardData.height));
   }
 
-  const refreshBoard = (newBoardData) => {
-    setBoardData(newBoardData);
-    setSquares(getSquares(newBoardData.challenges, newBoardData.width, newBoardData.height));
+  const initBoardData = async () => {
+    const newBoardData = await getBoardData();
+    refreshBoard(newBoardData);
+    // setSquares(getSquares(newBoardData.challenges, newBoardData.width, newBoardData.height));
   }
 
   const onChallengeClicked = (id) => {

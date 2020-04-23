@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Form, Button, Container, Row, Col, Modal,
 } from 'react-bootstrap';
@@ -11,6 +11,7 @@ function EditArea(props) {
     height: boardData.height,
   });
   const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
+  const [showImportFromFileModal, setShowImportFromFileModal] = useState(false);
 
   const getCurrentBoardData = () => {
     const currentBoardData = props.boardData;
@@ -56,7 +57,7 @@ function EditArea(props) {
 
   const onDeleteClicked = (challenge) => {
     const newChallenges = boardData.challenges.slice();
-    delete newChallenges[challenge.id];
+    newChallenges.splice(challenge.id, 1);
     if (props.onChallengesChanged) {
       props.onChallengesChanged(newChallenges);
     }
@@ -83,7 +84,43 @@ function EditArea(props) {
     }
   }
 
+  const exportBoardOnClick = () => {
+    const currentBoardData = getCurrentBoardData();
+    const exportName = 'BoardData';
+    const dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(currentBoardData))}`;
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute('href', dataStr);
+    downloadAnchorNode.setAttribute('download', `${exportName}.json`);
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  }
+
+  const importBoardOnClick = () => {
+    setShowImportFromFileModal(true)
+  }
+
+  const handleFileSelect = (e) => {
+    const { files } = e.target;
+    if (files && files.length > 0) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onload = (e2) => {
+        const newBoard = JSON.parse(e2.target.result);
+        if (newBoard && props.refreshBoard) {
+          props.refreshBoard(newBoard);
+        }
+      };
+      reader.readAsText(file);
+    }
+    setShowImportFromFileModal(false);
+  }
+
   const isChallengSelected = (challengeId) => challengeId === props.selectedChallengeId
+
+  useEffect(() => {
+    setBoardProperties({ ...boardProperties, width: boardData.width, height: boardData.height })
+  }, [boardData]);
 
   return (
     <>
@@ -92,6 +129,10 @@ function EditArea(props) {
           <div className="edit-area-title-1">Edit area</div>
           <div>
             <Button variant="primary" onClick={previewOnClick} size="sm">Preview</Button>
+            {' '}
+            <Button variant="primary" onClick={exportBoardOnClick} size="sm">Export board</Button>
+            {' '}
+            <Button variant="primary" onClick={importBoardOnClick} size="sm">Import board</Button>
           </div>
           <div className="edit-area-title-2">Board properties</div>
           <Container>
@@ -155,6 +196,22 @@ function EditArea(props) {
               </Button>
               <Button variant="primary" onClick={deleteAllChallengesApproved}>
                 Delete
+              </Button>
+            </Modal.Footer>
+          </Modal>
+          <Modal show={showImportFromFileModal} onHide={() => setShowImportFromFileModal(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Import from file</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <input type="file" onChange={handleFileSelect} id="files" name="files[]" accept=".json,.txt" />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowImportFromFileModal(false)}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={() => setShowImportFromFileModal(false)}>
+                Import
               </Button>
             </Modal.Footer>
           </Modal>

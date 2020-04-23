@@ -20,6 +20,9 @@ function EditChallenge(props) {
   const onEditClicked = (e) => {
     e.stopPropagation();
     setEditMode(true);
+    if (props.onChallengeClicked && challenge.id) {
+      props.onChallengeClicked(challenge.id);
+    }
   };
 
   const onDoneClicked = (e) => {
@@ -90,8 +93,8 @@ function EditChallenge(props) {
 
   return (
     <>
-      {editMode !== true
-        && (
+      {(editMode !== true || !isSelected)
+        ? (
           <div
             id={`editchallenge${challenge.id}`}
             className={`edit-area-challenge ${isSelected ? 'selected-challenge' : ''}`}
@@ -106,9 +109,8 @@ function EditChallenge(props) {
             <div className="edit-challenge-answer">{challenge.answer}</div>
             <div className="edit-challenge-location">{challenge.direction}</div>
           </div>
-        )}
-      {editMode === true
-        && (
+        )
+        : (
           <Form>
             <div className={`edit-area-challenge editMode ${isSelected ? 'selected-challenge' : ''}`} id={`editchallenge${challenge.id}`}>
               <div className="edit-challenge-location">

@@ -25,7 +25,7 @@ Edit mode:
 (V) Add new challenge button
 (V) Focus challange on edit area when clicking on a square
 (V) Location: can be selected by clicking on board.
-- Export\save\load created JSON.
+(V) Export\Import\Save\Load created JSON.
 
 - Edit\Fix multi work challenges.
 - Right click on square to add new challenge
