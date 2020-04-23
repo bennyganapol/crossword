@@ -90,6 +90,10 @@ function EditBoard() {
     const challengeSquare = getSquare(squares, challenge.questionX, challenge.questionY);
     if (challengeSquare) {
       squareSelected(challengeSquare.id, challenge);
+    } else {
+      setSelectedChallengeId(id);
+      setSelectedSquareId();
+      setSelectedSquares();
     }
   }
 
