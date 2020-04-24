@@ -2,7 +2,7 @@
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import {
-  FiArrowRight, FiArrowLeft, FiArrowDown, FiCornerDownLeft, FiCornerLeftDown, FiCornerRightDown,
+  FiArrowRight, FiArrowLeft, FiArrowDown, FiCornerDownLeft, FiCornerLeftDown, FiCornerRightDown, FiCornerUpLeft,
 } from 'react-icons/fi';
 
 function Square(props) {
@@ -85,6 +85,14 @@ function Square(props) {
         arrow = (
           <FiCornerDownLeft style={{
             position: 'absolute', zIndex: '10', fontSize: '20px', marginTop: '50%', top: '45%',
+          }}
+          />
+        )
+        break;
+      case 'upLeft':
+        arrow = (
+          <FiCornerUpLeft style={{
+            position: 'absolute', zIndex: '10', fontSize: '20px', marginBottom: '50%', bottom: '45%',
           }}
           />
         )

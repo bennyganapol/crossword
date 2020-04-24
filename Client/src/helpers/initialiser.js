@@ -84,6 +84,18 @@ const getChallengeArrowType = (questionX, questionY, x, y, direction) => {
   return arrowType;
 }
 
+const handleWhiteSpacesAndMultiword = (challenge) => {
+  if (challenge.answer) {
+    // Triming and spliting by spaces
+    const answerParts = challenge.answer.split(/(\s+)/).filter((e) => e.trim().length > 0);
+    if (answerParts.length > 1) {
+      challenge.multi = answerParts.map((part) => part.length);
+    }
+    challenge.answer = answerParts.join(' '); // This is the full answer (with spaces).
+    challenge.boardAnswer = answerParts.join(''); // This is the on board answer, spaces removed and letter will be mapped.
+  }
+}
+
 export const getSquare = (squares, x, y, boardWidth, boardHeight) => {
   if (boardWidth && boardHeight) {
     return squares[(y * boardWidth) + x];
@@ -94,30 +106,33 @@ export const getSquare = (squares, x, y, boardWidth, boardHeight) => {
 
 export const getChallengeSquares = (squares, challenge) => {
   const returnSquares = [];
-  for (let index = 0; index < challenge.answer.length; index += 1) {
-    let { x } = challenge;
-    let { y } = challenge;
-    switch (challenge.direction) {
-      case 'left':
-        x -= (index);
-        break;
-      case 'right':
-        x += (index);
-        break;
-      case 'down':
-        y += (index);
-        break;
-      case 'up':
-        y -= (index);
-        break;
-      default:
-        break;
-    }
-    const newSquare = getSquare(squares, x, y);
-    if (newSquare) {
-      returnSquares.push(newSquare);
+  if (challenge.boardAnswer) {
+    for (let index = 0; index < challenge.boardAnswer.length; index += 1) {
+      let { x } = challenge;
+      let { y } = challenge;
+      switch (challenge.direction) {
+        case 'left':
+          x -= (index);
+          break;
+        case 'right':
+          x += (index);
+          break;
+        case 'down':
+          y += (index);
+          break;
+        case 'up':
+          y -= (index);
+          break;
+        default:
+          break;
+      }
+      const newSquare = getSquare(squares, x, y);
+      if (newSquare) {
+        returnSquares.push(newSquare);
+      }
     }
   }
+
   return returnSquares;
 }
 
@@ -136,6 +151,8 @@ export const getSquares = (challenges, boardWidth, boardHeight) => {
   }
   challenges.forEach((challenge) => {
     // Set question square for challenge
+    handleWhiteSpacesAndMultiword(challenge);
+
     if (challenge.questionX != null && challenge.questionY != null) {
       const questionSquare = getSquare(squares, challenge.questionX, challenge.questionY, boardWidth, boardHeight);
       if (questionSquare) {
@@ -176,7 +193,7 @@ export const getSquares = (challenges, boardWidth, boardHeight) => {
     for (let i = 0; i < challengeSquares.length; i += 1) {
       const currentSquare = challengeSquares[i];
       if (currentSquare) {
-        currentSquare.answerLetter = mapLetter(challenge.answer[i]);
+        currentSquare.answerLetter = mapLetter(challenge.boardAnswer[i]);
         currentSquare.challenges.push(challenge);
       }
     }

@@ -26,9 +26,10 @@ Edit mode:
 (V) Focus challange on edit area when clicking on a square
 (V) Location: can be selected by clicking on board.
 (V) Export\Import\Save\Load created JSON.
+(V) Edit\Fix multi work challenges.
 
-- Edit\Fix multi work challenges.
 - Right click on square to add new challenge
+- Edit font size for challenge
 - Protect from errors, warn for incorrect challenges combinations.
 
 

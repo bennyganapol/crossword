@@ -51,7 +51,7 @@ function EditBoard() {
       const challengeElement = document.getElementById(`editchallenge${newChallenge.id}`);
       challengeElement.focus();
       challengeElement.blur();
-      if (newSelectedSquare.isQuestionSquare === true) {
+      if (newSelectedSquare.isQuestionSquare === true && challengeSquares && challengeSquares[0]) {
         setSelectedSquareId(challengeSquares[0].id);
       }
     } else {
