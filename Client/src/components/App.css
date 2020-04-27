@@ -75,7 +75,10 @@
 .board-div {
   display: flex;
   flex-direction: column;
-  padding-bottom: var(--board-padding-bottom);
+}
+
+.board-keyboard-auto-padding {
+  height: var(--board-padding-bottom);
 }
 
 /*  ------ Edit Board   ------ */
@@ -136,7 +139,6 @@
 }
 
 .edit-area-challenges .selected-challenge {
-  
   border: 1px solid yellow;
 }
 
@@ -170,7 +172,7 @@
   padding: 4px;
 }
 
-.edit-challenge-location input, .edit-challenge-location .take-location-button{
+.edit-challenge-location input, .edit-challenge-location .take-location-button {
   display: inline-block;
   width: 25px;
   font-size: 14px;
@@ -178,7 +180,7 @@
   margin-left: 2px;
 }
 
-.edit-challenge-location button{
+.edit-challenge-location button {
   margin-top: 2px;
   margin-bottom: 2px;
   width: 100px;
