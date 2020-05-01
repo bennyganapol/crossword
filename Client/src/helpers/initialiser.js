@@ -2,8 +2,8 @@
 import axios from 'axios';
 import { Img1, Img2 } from '../Images/img1'
 
-export const getBoardData = async () => {
-  const res = await axios.post(`${window.location.protocol}//${window.location.hostname}:4000/games`);
+export const getBoardData = async (boardId) => {
+  const res = await axios.post(`${window.location.protocol}//${window.location.hostname}:4000/games/${boardId}`);
   const { boardData } = res.data;
   const { challenges } = boardData;
 

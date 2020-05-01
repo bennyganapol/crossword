@@ -12,7 +12,6 @@ Arrowword:
 (V) Image challenge - fix arrows and image location
 
 
-
 Collaboration:
 (V) Lower opacity of other players letters
 (V) Broadcast also a deletion of a letter
@@ -27,7 +26,6 @@ Edit mode:
 (V) Location: can be selected by clicking on board.
 (V) Export\Import\Save\Load created JSON.
 (V) Edit\Fix multi work challenges.
-
 - Right click on square to add new challenge
 - Edit font size for challenge
 - Protect from errors, warn for incorrect challenges combinations.
@@ -35,14 +33,17 @@ Edit mode:
 
 General:
 (V) Put challenges and board in a json
-- Main screen choose from 2 puzzles
-- At least 2 AarrowWords
+(V) At least 2 AarrowWords
+(V) Main screen choose from 2 puzzles
+- Move images from client to server.
 - Invite friends - game id ?
 
 Edit screen:
 - Add new screen
 
 Game:
+- Fix deleting * 2 and ipad writing *2.
+
 - Add virtual keyboard.
 - Add settings button\screen.
 - Add keyboard type setting.

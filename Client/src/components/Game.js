@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import AppContext from '../helpers/AppContext';
 import Board from './Board';
 import ChallengeBar from './ChallengeBar';
 import { socket, socketManager } from '../helpers/SocketManager';
-import { getBoardData, getSquares, getChallengeSquares, getSquare, getNextSquare, mapLetter } from '../helpers/initialiser'
+import { getBoardData, getSquares, getChallengeSquares, getSquare, getNextSquare, mapLetter } from '../helpers/initialiser';
+
 // import Keyboard from "react-simple-keyboard";
 // import "react-simple-keyboard/build/css/index.css";
 
@@ -21,6 +23,7 @@ function Game(props) {
   const [selectDirection, setSelectDirection] = useState();
   const [letters, setLetters] = useState([]);
   const [otherPlayersLetters, setOtherPlayersLetters] = useState([]);
+  const { id: boardId } = useParams();
 
 
   const hiddenKeyboardRef = useRef(null);
@@ -32,11 +35,11 @@ function Game(props) {
   // const keyboard = useRef();
 
   const toggleFullScreen = () => {
-    var doc = window.document;
-    var docEl = doc.documentElement;
+    const doc = window.document;
+    const docEl = doc.documentElement;
 
-    var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-    var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+    const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+    const cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
 
     if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
       requestFullScreen.call(docEl);
@@ -242,7 +245,7 @@ function Game(props) {
   }
 
   const initBoardData = async () => {
-    const newBoardData = await getBoardData();
+    const newBoardData = await getBoardData(boardId);
     setBoardData(newBoardData);
     setSquares(getSquares(newBoardData.challenges, newBoardData.width, newBoardData.height));
   }
