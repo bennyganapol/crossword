@@ -1,3 +1,37 @@
+Deployment
+- Pack to container
+- Deploy to cloud
+
+Bug fixes:
+- Fix deleting * 2 and ipad writing *2.
+- Fix keyboard padding to be Dynamic
+- Panzoon with good zoom ?
+
+General:
+(V) Put challenges and board in a json
+(V) At least 2 AarrowWords
+(V) Main screen choose from 2 puzzles
+- Move images from client to server.
+- Invite friends - game id ?
+
+Game:
+- Add virtual keyboard.
+- Add settings button\screen.
+- Add keyboard type setting.
+- invite friends from setting screen.
+
+Edit mode:
+(V) Challenge edit buttons: done, cancel, delete ((V)Delete confirm, (V)buttons colors, (V)imidiate change to preview)
+(V) Edit challenge direction: down\aside.
+(V) Start clean board\delete all challenges button.
+(V) Add new challenge button
+(V) Focus challange on edit area when clicking on a square
+(V) Location: can be selected by clicking on board.
+(V) Export\Import\Save\Load created JSON.
+(V) Edit\Fix multi work challenges.
+- Right click on square to add new challenge
+- Edit font size for challenge
+- Protect from errors, warn for incorrect challenges combinations.
 
 Arrowword:
 (V) Solved out of total questions counter
@@ -17,37 +51,14 @@ Collaboration:
 (V) Broadcast also a deletion of a letter
 (V)) Dont show other players letters in squares of selected challenge
 
-Edit mode:
-(V) Challenge edit buttons: done, cancel, delete ((V)Delete confirm, (V)buttons colors, (V)imidiate change to preview)
-(V) Edit challenge direction: down\aside.
-(V) Start clean board\delete all challenges button.
-(V) Add new challenge button
-(V) Focus challange on edit area when clicking on a square
-(V) Location: can be selected by clicking on board.
-(V) Export\Import\Save\Load created JSON.
-(V) Edit\Fix multi work challenges.
-- Right click on square to add new challenge
-- Edit font size for challenge
-- Protect from errors, warn for incorrect challenges combinations.
 
 
-General:
-(V) Put challenges and board in a json
-(V) At least 2 AarrowWords
-(V) Main screen choose from 2 puzzles
-- Move images from client to server.
-- Invite friends - game id ?
 
-Edit screen:
-- Add new screen
 
-Game:
-- Fix deleting * 2 and ipad writing *2.
 
-- Add virtual keyboard.
-- Add settings button\screen.
-- Add keyboard type setting.
-- invite friends from setting screen.
+
+
+
 
 
 

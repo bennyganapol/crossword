@@ -9,7 +9,7 @@ import { gamesRouter } from './routes/games_router';
 // import bodyParser from 'body-parser';
 
 dotenv.config();
-const port = 4000;
+const port = 30001;
 const app = express();
 const httpServer = http.Server(app);
 const io = socketio(httpServer);

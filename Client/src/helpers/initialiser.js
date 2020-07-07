@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Img1, Img2 } from '../Images/img1'
 
 export const getBoardData = async (boardId) => {
-  const res = await axios.post(`${window.location.protocol}//${window.location.hostname}:4000/games/${boardId}`);
+  const res = await axios.post(`${beBaseUrl()}/games/${boardId}`);
   const { boardData } = res.data;
   const { challenges } = boardData;
 
@@ -13,6 +13,22 @@ export const getBoardData = async (boardId) => {
     }
   }
   return boardData;
+}
+
+export const beBaseUrl = (type) => {
+  let baseUrl;
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    baseUrl = `${window.location.protocol}//${window.location.hostname}:${30001}`;
+  } else {
+    if (type === 'socketio') {
+      baseUrl = `${window.location.protocol}//${window.location.hostname}`;
+    }
+    else {
+      baseUrl = `${window.location.protocol}//${window.location.hostname}/be`;
+    }
+
+  }
+  return baseUrl;
 }
 
 export const mapLetter = (letter) => {

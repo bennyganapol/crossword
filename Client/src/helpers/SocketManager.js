@@ -1,7 +1,18 @@
 /* eslint-disable class-methods-use-this */
 import socketio from 'socket.io-client';
+import { beBaseUrl } from './initialiser';
 
-export const socket = socketio(`${window.location.hostname}:4000`);
+const getSocketOptionObject = () => {
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')
+    return {};
+  else
+    return {
+      "path": "/be/socket.io"
+    };
+}
+
+export const socket = socketio(beBaseUrl('socketio'), getSocketOptionObject());
+
 const events = [];
 
 class SocketManager {

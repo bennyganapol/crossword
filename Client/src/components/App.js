@@ -10,9 +10,9 @@ function App() {
   return (
     <>
       <Switch>
-        <Route path="/" component={SelectGame} exact />
         <Route path="/game/:id" component={Game} />
         <Route path="/editboard" component={EditBoard} />
+        <Route path="/" component={SelectGame} />
       </Switch>
     </>
   );
